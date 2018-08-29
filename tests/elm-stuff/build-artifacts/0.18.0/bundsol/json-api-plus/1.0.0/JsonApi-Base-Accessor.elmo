@@ -1,0 +1,470 @@
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$withDataToKeyList = function (_p0) {
+	var _p1 = _p0;
+	var _p2 = _p1.data;
+	_v1_2:
+	do {
+		switch (_p2.ctor) {
+			case 'Id':
+				if (_p2._0.ctor === 'Just') {
+					return {
+						ctor: '::',
+						_0: _p2._0._0,
+						_1: {ctor: '[]'}
+					};
+				} else {
+					break _v1_2;
+				}
+			case 'Ids':
+				return _elm_lang$core$Set$toList(_p2._0);
+			default:
+				break _v1_2;
+		}
+	} while(false);
+	return {ctor: '[]'};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getDocMeta = F2(
+	function (key, doc) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			_elm_lang$core$Tuple$second,
+			A2(
+				_bundsol$json_api_plus$JsonApi_Base_Utility$find,
+				function (_p3) {
+					return A2(
+						F2(
+							function (x, y) {
+								return _elm_lang$core$Native_Utils.eq(x, y);
+							}),
+						key,
+						_elm_lang$core$Tuple$first(_p3));
+				},
+				doc.meta));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$isInData = F2(
+	function (id, _p4) {
+		var _p5 = _p4;
+		var _p6 = _p5.data;
+		_v3_2:
+		do {
+			switch (_p6.ctor) {
+				case 'Ids':
+					return A2(_elm_lang$core$Set$member, id, _p6._0);
+				case 'Id':
+					if (_p6._0.ctor === 'Just') {
+						return _elm_lang$core$Native_Utils.eq(_p6._0._0, id);
+					} else {
+						break _v3_2;
+					}
+				default:
+					break _v3_2;
+			}
+		} while(false);
+		return false;
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$claimersOf = F2(
+	function (idKey, doc) {
+		var criterion = function (_p7) {
+			return function (_p8) {
+				return A2(
+					_elm_lang$core$List$any,
+					_bundsol$json_api_plus$JsonApi_Base_Accessor$isInData(idKey),
+					_elm_lang$core$Dict$values(
+						function (_) {
+							return _.relationships;
+						}(_p8)));
+			};
+		};
+		return _elm_lang$core$Dict$keys(
+			A2(_elm_lang$core$Dict$filter, criterion, doc.included));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$isNew = function (_p9) {
+	var _p10 = _p9;
+	return _elm_lang$core$Native_Utils.cmp(_p10._2, 0) > 0;
+};
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$idKeysFromData = function (_p11) {
+	var _p12 = _p11;
+	var _p13 = _p12.data;
+	if (_p13.ctor === 'Ids') {
+		return _elm_lang$core$Set$toList(_p13._0);
+	} else {
+		return {ctor: '[]'};
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData = function (_p14) {
+	var _p15 = _p14;
+	var _p16 = _p15.data;
+	if ((_p16.ctor === 'Id') && (_p16._0.ctor === 'Just')) {
+		return _elm_lang$core$Maybe$Just(_p16._0._0);
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$toObject = F2(
+	function (_p17, complement) {
+		var _p18 = _p17;
+		return {attributes: complement.attributes, type_: _p18._0, id: _p18._1, meta: complement.meta, links: complement.links, idr: _p18};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getObject = F2(
+	function (idKey, doc) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			_bundsol$json_api_plus$JsonApi_Base_Accessor$toObject(idKey),
+			A2(_elm_lang$core$Dict$get, idKey, doc.included));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement = F2(
+	function (idKey, doc) {
+		return A2(_elm_lang$core$Dict$get, idKey, doc.included);
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getAttributes = F2(
+	function (idKey, doc) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (_) {
+				return _.attributes;
+			},
+			A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, idKey, doc));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getLocal = F2(
+	function (idKey, doc) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (_) {
+				return _.local;
+			},
+			A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, idKey, doc));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationships = F2(
+	function (idKey, doc) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (_) {
+				return _.relationships;
+			},
+			A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, idKey, doc));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship = F3(
+	function (idKey, field, doc) {
+		return A2(
+			_elm_lang$core$Maybe$andThen,
+			_elm_lang$core$Dict$get(field),
+			A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationships, idKey, doc));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$reach = F3(
+	function (idKey, fields, doc) {
+		var advance = F2(
+			function (h, key) {
+				return A2(
+					_elm_lang$core$Maybe$andThen,
+					_bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData,
+					A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, key, h, doc));
+			});
+		var repeat = function (pair) {
+			repeat:
+			while (true) {
+				var _p19 = pair;
+				if (_p19._1.ctor === 'Nothing') {
+					return _elm_lang$core$Maybe$Nothing;
+				} else {
+					if (_p19._0.ctor === '[]') {
+						return _elm_lang$core$Maybe$Nothing;
+					} else {
+						if (_p19._0._1.ctor === '[]') {
+							return A2(advance, _p19._0._0, _p19._1._0);
+						} else {
+							var _v11 = {
+								ctor: '_Tuple2',
+								_0: _p19._0._1,
+								_1: A2(advance, _p19._0._0, _p19._1._0)
+							};
+							pair = _v11;
+							continue repeat;
+						}
+					}
+				}
+			}
+		};
+		return repeat(
+			{
+				ctor: '_Tuple2',
+				_0: fields,
+				_1: _elm_lang$core$Maybe$Just(idKey)
+			});
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$reachMany = F3(
+	function (idKey, fields, doc) {
+		var advance = F2(
+			function (h, key) {
+				return A2(
+					_elm_lang$core$Maybe$andThen,
+					_bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData,
+					A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, key, h, doc));
+			});
+		var repeat = function (pair) {
+			repeat:
+			while (true) {
+				var _p20 = pair;
+				if (_p20._1.ctor === 'Nothing') {
+					return {ctor: '[]'};
+				} else {
+					if (_p20._0.ctor === '[]') {
+						return {ctor: '[]'};
+					} else {
+						if (_p20._0._1.ctor === '::') {
+							if (_p20._0._1._1.ctor === '[]') {
+								var _p24 = _p20._0._1._0;
+								var _p21 = A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, _p20._1._0, _p20._0._0, doc);
+								if (_p21.ctor === 'Nothing') {
+									return {ctor: '[]'};
+								} else {
+									var _p23 = _p21._0;
+									var _p22 = {
+										ctor: '_Tuple2',
+										_0: _bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData(_p23),
+										_1: _bundsol$json_api_plus$JsonApi_Base_Accessor$idKeysFromData(_p23)
+									};
+									if (_p22._0.ctor === 'Nothing') {
+										if (_p22._1.ctor === '[]') {
+											return {ctor: '[]'};
+										} else {
+											return A2(
+												_elm_lang$core$List$filterMap,
+												advance(_p24),
+												_p22._1);
+										}
+									} else {
+										var _v15 = {
+											ctor: '_Tuple2',
+											_0: {
+												ctor: '::',
+												_0: _p24,
+												_1: {ctor: '[]'}
+											},
+											_1: _elm_lang$core$Maybe$Just(_p22._0._0)
+										};
+										pair = _v15;
+										continue repeat;
+									}
+								}
+							} else {
+								var _v16 = {
+									ctor: '_Tuple2',
+									_0: _p20._0._1,
+									_1: A2(advance, _p20._0._0, _p20._1._0)
+								};
+								pair = _v16;
+								continue repeat;
+							}
+						} else {
+							return A2(
+								_elm_lang$core$Maybe$withDefault,
+								{ctor: '[]'},
+								A2(
+									_elm_lang$core$Maybe$map,
+									_bundsol$json_api_plus$JsonApi_Base_Accessor$idKeysFromData,
+									A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, _p20._1._0, _p20._0._0, doc)));
+						}
+					}
+				}
+			}
+		};
+		return repeat(
+			{
+				ctor: '_Tuple2',
+				_0: fields,
+				_1: _elm_lang$core$Maybe$Just(idKey)
+			});
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$track = F4(
+	function (idKey, fields, subject, doc) {
+		var advance = F2(
+			function (h, key) {
+				return A2(
+					_elm_lang$core$Maybe$andThen,
+					_bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData,
+					A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, key, h, doc));
+			});
+		var repeat = function (pair) {
+			repeat:
+			while (true) {
+				var _p25 = pair;
+				if (_p25._1.ctor === 'Nothing') {
+					return _elm_lang$core$Maybe$Nothing;
+				} else {
+					if (_p25._0.ctor === '[]') {
+						return _elm_lang$core$Maybe$Nothing;
+					} else {
+						if (_p25._0._1.ctor === '::') {
+							if (_p25._0._1._1.ctor === '[]') {
+								var _p29 = _p25._0._1._0;
+								var _p26 = A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, _p25._1._0, _p25._0._0, doc);
+								if (_p26.ctor === 'Nothing') {
+									return _elm_lang$core$Maybe$Nothing;
+								} else {
+									var _p28 = _p26._0;
+									var _p27 = {
+										ctor: '_Tuple2',
+										_0: _bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData(_p28),
+										_1: _bundsol$json_api_plus$JsonApi_Base_Accessor$idKeysFromData(_p28)
+									};
+									if (_p27._0.ctor === 'Nothing') {
+										if (_p27._1.ctor === '[]') {
+											return _elm_lang$core$Maybe$Nothing;
+										} else {
+											return A2(
+												_bundsol$json_api_plus$JsonApi_Base_Utility$find,
+												F2(
+													function (x, y) {
+														return _elm_lang$core$Native_Utils.eq(x, y);
+													})(subject),
+												A2(
+													_elm_lang$core$List$filterMap,
+													advance(_p29),
+													_p27._1));
+										}
+									} else {
+										var _v20 = {
+											ctor: '_Tuple2',
+											_0: {
+												ctor: '::',
+												_0: _p29,
+												_1: {ctor: '[]'}
+											},
+											_1: _elm_lang$core$Maybe$Just(_p27._0._0)
+										};
+										pair = _v20;
+										continue repeat;
+									}
+								}
+							} else {
+								var _v21 = {
+									ctor: '_Tuple2',
+									_0: _p25._0._1,
+									_1: A2(advance, _p25._0._0, _p25._1._0)
+								};
+								pair = _v21;
+								continue repeat;
+							}
+						} else {
+							return A2(
+								_bundsol$json_api_plus$JsonApi_Base_Utility$find,
+								F2(
+									function (x, y) {
+										return _elm_lang$core$Native_Utils.eq(x, y);
+									})(subject),
+								function () {
+									var _p30 = A2(
+										_elm_lang$core$Maybe$map,
+										function (_) {
+											return _.data;
+										},
+										A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, _p25._1._0, _p25._0._0, doc));
+									_v22_2:
+									do {
+										if (_p30.ctor === 'Just') {
+											switch (_p30._0.ctor) {
+												case 'Ids':
+													return _elm_lang$core$Set$toList(_p30._0._0);
+												case 'Id':
+													if (_p30._0._0.ctor === 'Just') {
+														return _elm_lang$core$List$singleton(_p30._0._0._0);
+													} else {
+														break _v22_2;
+													}
+												default:
+													break _v22_2;
+											}
+										} else {
+											break _v22_2;
+										}
+									} while(false);
+									return {ctor: '[]'};
+								}());
+						}
+					}
+				}
+			}
+		};
+		return repeat(
+			{
+				ctor: '_Tuple2',
+				_0: fields,
+				_1: _elm_lang$core$Maybe$Just(idKey)
+			});
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationshipLinks = F3(
+	function (idKey, field, doc) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.links;
+				},
+				A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, idKey, field, doc)));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationshipMeta = F3(
+	function (idKey, field, doc) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.meta;
+				},
+				A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, idKey, field, doc)));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationLocality = F3(
+	function (idKey, field, doc) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			false,
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.isLocal;
+				},
+				A3(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationship, idKey, field, doc)));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$nonLocalRelationshipsIds = F2(
+	function (doc, idKey) {
+		return _elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$map,
+				_bundsol$json_api_plus$JsonApi_Base_Accessor$withDataToKeyList,
+				A2(
+					_elm_lang$core$Maybe$withDefault,
+					{ctor: '[]'},
+					A2(
+						_elm_lang$core$Maybe$map,
+						_elm_lang$core$List$filter(
+							function (_p31) {
+								return !function (_) {
+									return _.isLocal;
+								}(_p31);
+							}),
+						A2(
+							_elm_lang$core$Maybe$map,
+							_elm_lang$core$Dict$values,
+							A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getRelationships, idKey, doc))))));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getResource = F2(
+	function (idKey, doc) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			_bundsol$json_api_plus$JsonApi_Base_Definition$fuse(idKey),
+			A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, idKey, doc));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Accessor$getLinks = F2(
+	function (idKey, doc) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.links;
+				},
+				A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, idKey, doc)));
+	});

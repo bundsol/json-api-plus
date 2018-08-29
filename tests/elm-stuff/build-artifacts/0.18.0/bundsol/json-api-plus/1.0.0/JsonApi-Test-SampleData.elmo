@@ -1,0 +1,180 @@
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$fetched = function () {
+	var _p0 = A2(_elm_lang$core$Json_Decode$decodeValue, _bundsol$json_api_plus$JsonApi$docDecoder, _bundsol$json_api_plus$JsonApi_Test_Data_Phony$fetchedJson);
+	if (((_p0.ctor === 'Ok') && (_p0._0.ctor === '_Tuple2')) && (_p0._0._0.ctor === 'DataDoc')) {
+		return _p0._0._1;
+	} else {
+		return _bundsol$json_api_plus$JsonApi_TopLevel$emptyDocument;
+	}
+}();
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$wrongObject = _elm_lang$core$Json_Encode$object(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'data',
+			_1: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Purchase$wrong_purchase)
+		},
+		_1: {ctor: '[]'}
+	});
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$decodedWrongObject = A2(_elm_lang$core$Json_Decode$decodeValue, _bundsol$json_api_plus$JsonApi$docDecoder, _bundsol$json_api_plus$JsonApi_Test_SampleData$wrongObject);
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$wrongNew = _elm_lang$core$Json_Encode$object(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'data',
+			_1: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Purchase$new_purchase)
+		},
+		_1: {ctor: '[]'}
+	});
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$newObject = _elm_lang$core$Json_Encode$object(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'data',
+			_1: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Purchase$new_purchase)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'included',
+				_1: _elm_lang$core$Json_Encode$list(
+					{
+						ctor: '::',
+						_0: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Purchase$new_purchase_option_pack),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$favoriteStore),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$twinTown),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Bogus$bogusOne),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_Bogus$bogusTwo),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					})
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'meta',
+					_1: _elm_lang$core$Json_Encode$object(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'is-new',
+								_1: _elm_lang$core$Json_Encode$bool(true)
+							},
+							_1: {ctor: '[]'}
+						})
+				},
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$decodedNewObject = A2(_elm_lang$core$Json_Decode$decodeValue, _bundsol$json_api_plus$JsonApi$docDecoder, _bundsol$json_api_plus$JsonApi_Test_SampleData$newObject);
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$newPurchaseGuide = function () {
+	var _p1 = _bundsol$json_api_plus$JsonApi_Test_SampleData$decodedNewObject;
+	if (((((_p1.ctor === 'Ok') && (_p1._0.ctor === '_Tuple2')) && (_p1._0._0.ctor === 'DataDoc')) && (_p1._0._0._0.ctor === 'Single')) && (_p1._0._0._0._0.ctor === 'Just')) {
+		return {doc: _p1._0._1, idr: _p1._0._0._0._0._0};
+	} else {
+		return {doc: _bundsol$json_api_plus$JsonApi_TopLevel$emptyDocument, idr: _bundsol$json_api_plus$JsonApi$emptyIdr};
+	}
+}();
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$sampleObject = _elm_lang$core$Json_Encode$object(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'data',
+			_1: _elm_lang$core$Json_Encode$object(_bundsol$json_api_plus$JsonApi_Test_Data_User$sandyMarkinson)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'included',
+				_1: _elm_lang$core$Json_Encode$list(
+					_elm_lang$core$List$concat(
+						{
+							ctor: '::',
+							_0: _bundsol$json_api_plus$JsonApi_Test_Data_Product$product_objects,
+							_1: {
+								ctor: '::',
+								_0: _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishment_objects,
+								_1: {
+									ctor: '::',
+									_0: _bundsol$json_api_plus$JsonApi_Test_Data_Choice$choice_objects,
+									_1: {
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brand_objects,
+										_1: {
+											ctor: '::',
+											_0: _bundsol$json_api_plus$JsonApi_Test_Data_Stock$stock_objects,
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}))
+			},
+			_1: {ctor: '[]'}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$decodedObject = A2(_elm_lang$core$Json_Decode$decodeValue, _bundsol$json_api_plus$JsonApi$docDecoder, _bundsol$json_api_plus$JsonApi_Test_SampleData$sampleObject);
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$userGuide = function () {
+	var _p2 = _bundsol$json_api_plus$JsonApi_Test_SampleData$decodedObject;
+	if (((((_p2.ctor === 'Ok') && (_p2._0.ctor === '_Tuple2')) && (_p2._0._0.ctor === 'DataDoc')) && (_p2._0._0._0.ctor === 'Single')) && (_p2._0._0._0._0.ctor === 'Just')) {
+		return {doc: _p2._0._1, idr: _p2._0._0._0._0._0};
+	} else {
+		return {doc: _bundsol$json_api_plus$JsonApi_TopLevel$emptyDocument, idr: _bundsol$json_api_plus$JsonApi$emptyIdr};
+	}
+}();
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$sampleList = _elm_lang$core$Json_Encode$object(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'data',
+			_1: _elm_lang$core$Json_Encode$list(_bundsol$json_api_plus$JsonApi_Test_Data_Stock$stock_objects)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'included',
+				_1: _elm_lang$core$Json_Encode$list(
+					_elm_lang$core$List$concat(
+						{
+							ctor: '::',
+							_0: _bundsol$json_api_plus$JsonApi_Test_Data_Product$product_objects,
+							_1: {
+								ctor: '::',
+								_0: _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishment_objects,
+								_1: {
+									ctor: '::',
+									_0: _bundsol$json_api_plus$JsonApi_Test_Data_Choice$choice_objects,
+									_1: {
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brand_objects,
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}))
+			},
+			_1: {ctor: '[]'}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Test_SampleData$decodedList = A2(_elm_lang$core$Json_Decode$decodeValue, _bundsol$json_api_plus$JsonApi$docDecoder, _bundsol$json_api_plus$JsonApi_Test_SampleData$sampleList);

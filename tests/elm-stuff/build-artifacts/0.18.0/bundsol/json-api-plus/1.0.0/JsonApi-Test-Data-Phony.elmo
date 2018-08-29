@@ -1,0 +1,303 @@
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony5 = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('phony')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'attributes',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+				{
+					ctor: '::',
+					_0: A2(
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+						'name',
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Nameless')),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'isValid',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$b(false)),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'quote-amount',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(111.25)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'rank',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(15)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				})),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'meta',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'new-resource-tag',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('GGGG77777')),
+						_1: {ctor: '[]'}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony4 = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('phony')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'attributes',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+				{
+					ctor: '::',
+					_0: A2(
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+						'name',
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Unnamed')),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'isValid',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$b(false)),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'quote-amount',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(55.55)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'rank',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(19)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				})),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'meta',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'new-resource-tag',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('PPPPPPPPPP+++++')),
+						_1: {ctor: '[]'}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$newPhonies = {
+	ctor: '::',
+	_0: _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony4,
+	_1: {
+		ctor: '::',
+		_0: _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony5,
+		_1: {ctor: '[]'}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony3 = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('phony')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('214')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Much better')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'isValid',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$b(false)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'quote-amount',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(66.0)),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'rank',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(12)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony2 = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('phony')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('23')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Worse')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'isValid',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$b(true)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'quote-amount',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(30.5)),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'rank',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(8)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony1 = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('phony')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('16')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Awful')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'isValid',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$b(true)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'quote-amount',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(10.5)),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'rank',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(2)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phonies = {
+	ctor: '::',
+	_0: _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony1,
+	_1: {
+		ctor: '::',
+		_0: _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony2,
+		_1: {
+			ctor: '::',
+			_0: _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phony3,
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Phony$fetchedJson = _bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+	{
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'data',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$l(
+				A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$o, _bundsol$json_api_plus$JsonApi_Test_Data_Phony$phonies))),
+		_1: {ctor: '[]'}
+	});

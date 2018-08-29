@@ -1,0 +1,123 @@
+var _bundsol$json_api_plus$Serializing$catenate = function (g) {
+	var transform = function (item) {
+		return A2(
+			_elm_lang$core$Maybe$andThen,
+			_bundsol$boxed$Boxed$asString,
+			A2(_elm_lang$core$Dict$get, 'name', item.attributes));
+	};
+	return A2(
+		_elm_lang$core$String$join,
+		' - ',
+		_elm_lang$core$List$sort(
+			A3(
+				_bundsol$json_api_plus$JsonApi_Getter$reachFilterMap,
+				transform,
+				{
+					ctor: '::',
+					_0: 'phonies',
+					_1: {ctor: '[]'}
+				},
+				g)));
+};
+var _bundsol$json_api_plus$Serializing$decodeGuide = function (json) {
+	var decodedObject = A2(_elm_lang$core$Json_Decode$decodeString, _bundsol$json_api_plus$JsonApi$docDecoder, json);
+	var _p0 = decodedObject;
+	if (((((_p0.ctor === 'Ok') && (_p0._0.ctor === '_Tuple2')) && (_p0._0._0.ctor === 'DataDoc')) && (_p0._0._0._0.ctor === 'Single')) && (_p0._0._0._0._0.ctor === 'Just')) {
+		return {doc: _p0._0._1, idr: _p0._0._0._0._0._0};
+	} else {
+		return {doc: _bundsol$json_api_plus$JsonApi_TopLevel$emptyDocument, idr: _bundsol$json_api_plus$JsonApi$emptyIdr};
+	}
+};
+var _bundsol$json_api_plus$Serializing$serialize = function (name) {
+	return A2(
+		_elm_community$elm_test$Test$test,
+		name,
+		function (_p1) {
+			var intoJson = function (doc) {
+				return A2(
+					_elm_lang$core$Json_Encode$encode,
+					0,
+					A2(_bundsol$json_api_plus$JsonApi_Base_Core$docEncoder, _bundsol$boxed$Boxed_Json$encoder, doc));
+			};
+			var originalGuide = _bundsol$json_api_plus$Serializing$decodeGuide(
+				A2(_elm_lang$core$Json_Encode$encode, 0, _bundsol$json_api_plus$JsonApi_Test_SampleData$sampleObject));
+			var didItHave = A2(
+				_elm_lang$core$String$contains,
+				'\"phonies\":{\"data\":[{\"type\":\"phony\"',
+				intoJson(originalGuide.doc));
+			var grownGuide = A3(_bundsol$json_api_plus$JsonApi_Relationship$incorporate, 'phonies', _bundsol$json_api_plus$JsonApi_Test_SampleData$fetched, originalGuide);
+			var grownString = intoJson(grownGuide.doc);
+			var nowHasPhonies = A2(_elm_lang$core$String$contains, '\"phonies\":{\"data\":[{\"type\":\"phony\"', grownString);
+			var iterated = _bundsol$json_api_plus$Serializing$decodeGuide(
+				function (_p2) {
+					return intoJson(
+						function (_) {
+							return _.doc;
+						}(_p2));
+				}(
+					_bundsol$json_api_plus$Serializing$decodeGuide(
+						function (_p3) {
+							return intoJson(
+								function (_) {
+									return _.doc;
+								}(_p3));
+						}(
+							_bundsol$json_api_plus$Serializing$decodeGuide(grownString)))));
+			var catenated = _bundsol$json_api_plus$Serializing$catenate(iterated);
+			return A2(
+				_elm_community$elm_test$Expect$equal,
+				{ctor: '_Tuple3', _0: didItHave, _1: nowHasPhonies, _2: catenated},
+				{ctor: '_Tuple3', _0: false, _1: true, _2: 'Awful - Much better - Worse'});
+		});
+};
+var _bundsol$json_api_plus$Serializing$setAsLocal = function (name) {
+	return A2(
+		_elm_community$elm_test$Test$test,
+		name,
+		function (_p4) {
+			var intoJson = function (doc) {
+				return A2(
+					_elm_lang$core$Json_Encode$encode,
+					0,
+					A2(_bundsol$json_api_plus$JsonApi_Base_Core$docEncoder, _bundsol$boxed$Boxed_Json$encoder, doc));
+			};
+			var grownGuide = A3(
+				_bundsol$json_api_plus$JsonApi_Relationship$incorporate,
+				'phonies',
+				_bundsol$json_api_plus$JsonApi_Test_SampleData$fetched,
+				_bundsol$json_api_plus$Serializing$decodeGuide(
+					A2(_elm_lang$core$Json_Encode$encode, 0, _bundsol$json_api_plus$JsonApi_Test_SampleData$sampleObject)));
+			var outbound = _bundsol$json_api_plus$Serializing$catenate(
+				_bundsol$json_api_plus$Serializing$decodeGuide(
+					intoJson(grownGuide.doc)));
+			var localGuide = A3(_bundsol$json_api_plus$JsonApi_Relationship$setLocality, 'phonies', true, grownGuide);
+			var local = _bundsol$json_api_plus$Serializing$catenate(
+				_bundsol$json_api_plus$Serializing$decodeGuide(
+					intoJson(localGuide.doc)));
+			var restored = _bundsol$json_api_plus$Serializing$catenate(
+				_bundsol$json_api_plus$Serializing$decodeGuide(
+					function (_p5) {
+						return intoJson(
+							function (_) {
+								return _.doc;
+							}(_p5));
+					}(
+						A3(_bundsol$json_api_plus$JsonApi_Relationship$setLocality, 'phonies', false, localGuide))));
+			return A2(
+				_elm_community$elm_test$Expect$equal,
+				{ctor: '_Tuple3', _0: outbound, _1: local, _2: restored},
+				{ctor: '_Tuple3', _0: 'Awful - Much better - Worse', _1: '', _2: 'Awful - Much better - Worse'});
+		});
+};
+var _bundsol$json_api_plus$Serializing$suite = A2(
+	_elm_community$elm_test$Test$describe,
+	'Serialize and deserialize over and over',
+	{
+		ctor: '::',
+		_0: _bundsol$json_api_plus$Serializing$serialize('Feedback'),
+		_1: {
+			ctor: '::',
+			_0: _bundsol$json_api_plus$Serializing$setAsLocal('Do not encode local relationships'),
+			_1: {ctor: '[]'}
+		}
+	});

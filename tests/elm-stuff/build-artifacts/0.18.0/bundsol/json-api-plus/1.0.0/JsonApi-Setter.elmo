@@ -1,0 +1,321 @@
+var _bundsol$json_api_plus$JsonApi_Setter$remove = F2(
+	function (varname, g) {
+		var _p0 = varname;
+		if (_p0.ctor === 'Local') {
+			return A2(
+				_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+				g,
+				A3(
+					_bundsol$json_api_plus$JsonApi_Base_Core$modifyLocal,
+					g.idr,
+					_elm_lang$core$Dict$remove(_p0._0),
+					g.doc));
+		} else {
+			return A2(
+				_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+				g,
+				A3(
+					_bundsol$json_api_plus$JsonApi_Base_Core$modifyAttributes,
+					g.idr,
+					_elm_lang$core$Dict$remove(_p0._0),
+					g.doc));
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setLocals = F2(
+	function (properties, g) {
+		return A2(
+			_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+			g,
+			A2(
+				F2(
+					function (x, y) {
+						return y(x);
+					}),
+				g.doc,
+				A2(
+					_bundsol$json_api_plus$JsonApi_Base_Core$modifyLocal,
+					g.idr,
+					_elm_lang$core$Dict$union(
+						_elm_lang$core$Dict$fromList(properties)))));
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setProperties = F2(
+	function (properties, g) {
+		return A2(
+			_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+			g,
+			A2(
+				F2(
+					function (x, y) {
+						return y(x);
+					}),
+				g.doc,
+				A2(
+					_bundsol$json_api_plus$JsonApi_Base_Core$modifyAttributes,
+					g.idr,
+					_elm_lang$core$Dict$union(
+						_elm_lang$core$Dict$fromList(properties)))));
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setLocal = F3(
+	function (property, value, g) {
+		return A2(
+			_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+			g,
+			A2(
+				F2(
+					function (x, y) {
+						return y(x);
+					}),
+				g.doc,
+				A2(
+					_bundsol$json_api_plus$JsonApi_Base_Core$modifyLocal,
+					g.idr,
+					A2(_elm_lang$core$Dict$insert, property, value))));
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setProperty = F3(
+	function (property, value, g) {
+		return A2(
+			_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+			g,
+			A2(
+				F2(
+					function (x, y) {
+						return y(x);
+					}),
+				g.doc,
+				A2(
+					_bundsol$json_api_plus$JsonApi_Base_Core$modifyAttributes,
+					g.idr,
+					A2(_elm_lang$core$Dict$insert, property, value))));
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$swap = F3(
+	function (vn1, vn2, g) {
+		var intraSwap = F4(
+			function (field1, field2, getter, setter) {
+				var _p1 = {
+					ctor: '_Tuple2',
+					_0: A2(getter, field1, g),
+					_1: A2(getter, field2, g)
+				};
+				if (((_p1.ctor === '_Tuple2') && (_p1._0.ctor === 'Just')) && (_p1._1.ctor === 'Just')) {
+					return A3(
+						setter,
+						field2,
+						_p1._0._0,
+						A3(setter, field1, _p1._1._0, g));
+				} else {
+					return g;
+				}
+			});
+		var interSwap = F2(
+			function (local, outbound) {
+				var _p2 = {
+					ctor: '_Tuple2',
+					_0: A2(_bundsol$json_api_plus$JsonApi_Getter$getLocal, local, g),
+					_1: A2(_bundsol$json_api_plus$JsonApi_Getter$getProperty, outbound, g)
+				};
+				if (((_p2.ctor === '_Tuple2') && (_p2._0.ctor === 'Just')) && (_p2._1.ctor === 'Just')) {
+					return A3(
+						_bundsol$json_api_plus$JsonApi_Setter$setProperty,
+						outbound,
+						_p2._0._0,
+						A3(_bundsol$json_api_plus$JsonApi_Setter$setLocal, local, _p2._1._0, g));
+				} else {
+					return g;
+				}
+			});
+		var _p3 = {ctor: '_Tuple2', _0: vn1, _1: vn2};
+		if (_p3._0.ctor === 'Local') {
+			if (_p3._1.ctor === 'Outbound') {
+				return A2(interSwap, _p3._0._0, _p3._1._0);
+			} else {
+				return A4(intraSwap, _p3._0._0, _p3._1._0, _bundsol$json_api_plus$JsonApi_Getter$getLocal, _bundsol$json_api_plus$JsonApi_Setter$setLocal);
+			}
+		} else {
+			if (_p3._1.ctor === 'Local') {
+				return A2(interSwap, _p3._1._0, _p3._0._0);
+			} else {
+				return A4(intraSwap, _p3._0._0, _p3._1._0, _bundsol$json_api_plus$JsonApi_Getter$getProperty, _bundsol$json_api_plus$JsonApi_Setter$setProperty);
+			}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$trade = F3(
+	function (vn1, vn2, g) {
+		var interTrade = F2(
+			function (local, outbound) {
+				return A2(
+					_bundsol$json_api_plus$JsonApi_Base_Guide$setDoc,
+					g,
+					A4(_bundsol$json_api_plus$JsonApi_Base_Core$trade, g.idr, local, outbound, g.doc));
+			});
+		var _p4 = {ctor: '_Tuple2', _0: vn1, _1: vn2};
+		_v4_2:
+		do {
+			if (_p4.ctor === '_Tuple2') {
+				if (_p4._0.ctor === 'Local') {
+					if (_p4._1.ctor === 'Outbound') {
+						return A2(interTrade, _p4._0._0, _p4._1._0);
+					} else {
+						break _v4_2;
+					}
+				} else {
+					if (_p4._1.ctor === 'Local') {
+						return A2(interTrade, _p4._1._0, _p4._0._0);
+					} else {
+						break _v4_2;
+					}
+				}
+			} else {
+				break _v4_2;
+			}
+		} while(false);
+		return A3(_bundsol$json_api_plus$JsonApi_Setter$swap, vn1, vn2, g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$copy = F3(
+	function (vn1, vn2, g) {
+		var copier = F4(
+			function (source, target, getter, setter) {
+				var _p5 = A2(getter, source, g);
+				if (_p5.ctor === 'Just') {
+					return A3(setter, target, _p5._0, g);
+				} else {
+					return g;
+				}
+			});
+		var _p6 = {ctor: '_Tuple2', _0: vn1, _1: vn2};
+		if (_p6._0.ctor === 'Local') {
+			if (_p6._1.ctor === 'Outbound') {
+				return A4(copier, _p6._0._0, _p6._1._0, _bundsol$json_api_plus$JsonApi_Getter$getLocal, _bundsol$json_api_plus$JsonApi_Setter$setProperty);
+			} else {
+				return A4(copier, _p6._0._0, _p6._1._0, _bundsol$json_api_plus$JsonApi_Getter$getLocal, _bundsol$json_api_plus$JsonApi_Setter$setLocal);
+			}
+		} else {
+			if (_p6._1.ctor === 'Local') {
+				return A4(copier, _p6._0._0, _p6._1._0, _bundsol$json_api_plus$JsonApi_Getter$getProperty, _bundsol$json_api_plus$JsonApi_Setter$setLocal);
+			} else {
+				return A4(copier, _p6._0._0, _p6._1._0, _bundsol$json_api_plus$JsonApi_Getter$getProperty, _bundsol$json_api_plus$JsonApi_Setter$setProperty);
+			}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$move = F2(
+	function (varname, g) {
+		var mover = F3(
+			function (field, getter, setter) {
+				var _p7 = A2(getter, field, g);
+				if (_p7.ctor === 'Just') {
+					return A3(
+						setter,
+						field,
+						_p7._0,
+						A2(_bundsol$json_api_plus$JsonApi_Setter$remove, varname, g));
+				} else {
+					return g;
+				}
+			});
+		var _p8 = varname;
+		if (_p8.ctor === 'Local') {
+			return A3(mover, _p8._0, _bundsol$json_api_plus$JsonApi_Getter$getLocal, _bundsol$json_api_plus$JsonApi_Setter$setProperty);
+		} else {
+			return A3(mover, _p8._0, _bundsol$json_api_plus$JsonApi_Getter$getProperty, _bundsol$json_api_plus$JsonApi_Setter$setLocal);
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$promote = F2(
+	function (field, g) {
+		var _p9 = A2(_bundsol$json_api_plus$JsonApi_Getter$getLocal, field, g);
+		if (_p9.ctor === 'Just') {
+			return A3(_bundsol$json_api_plus$JsonApi_Setter$setProperty, field, _p9._0, g);
+		} else {
+			return g;
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setSubfield = F4(
+	function (property, subfield, value, g) {
+		var boxer = function (_p10) {
+			return _bundsol$boxed$Boxed$Dictionary(
+				A2(
+					_bundsol$boxed$Boxed_Dictionary$apply,
+					A2(_elm_lang$core$Dict$insert, subfield, value),
+					_p10));
+		};
+		var modifier = function (attributes) {
+			return A3(
+				_elm_lang$core$Dict$update,
+				property,
+				_elm_lang$core$Maybe$map(boxer),
+				attributes);
+		};
+		return A3(
+			_elm_lang$core$Basics$flip,
+			_bundsol$json_api_plus$JsonApi_Base_Guide$updateDoc,
+			g,
+			A3(_bundsol$json_api_plus$JsonApi_Base_Core$modifyAttributes, g.idr, modifier, g.doc));
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setLocalInt = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setLocal,
+			field,
+			_bundsol$boxed$Boxed$Integer(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setLocalFloat = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setLocal,
+			field,
+			_bundsol$boxed$Boxed$Double(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setLocalBool = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setLocal,
+			field,
+			_bundsol$boxed$Boxed$Boolean(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setLocalString = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setLocal,
+			field,
+			_bundsol$boxed$Boxed$Str(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setBool = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setProperty,
+			field,
+			_bundsol$boxed$Boxed$Boolean(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setFloat = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setProperty,
+			field,
+			_bundsol$boxed$Boxed$Double(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setInt = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setProperty,
+			field,
+			_bundsol$boxed$Boxed$Integer(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$setString = F3(
+	function (field, value, g) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Setter$setProperty,
+			field,
+			_bundsol$boxed$Boxed$Str(value),
+			g);
+	});
+var _bundsol$json_api_plus$JsonApi_Setter$Outbound = function (a) {
+	return {ctor: 'Outbound', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Setter$Local = function (a) {
+	return {ctor: 'Local', _0: a};
+};

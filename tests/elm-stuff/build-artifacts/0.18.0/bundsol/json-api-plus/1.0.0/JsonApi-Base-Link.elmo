@@ -1,0 +1,16 @@
+var _bundsol$json_api_plus$JsonApi_Base_Link$linkTranslator = function (link) {
+	var _p0 = link;
+	if (_p0._1.ctor === 'UrlLink') {
+		return {
+			ctor: '_Tuple2',
+			_0: _p0._0,
+			_1: _bundsol$json_api_plus$JsonApi$UrlLink(_p0._1._0)
+		};
+	} else {
+		return {
+			ctor: '_Tuple2',
+			_0: _p0._0,
+			_1: _bundsol$json_api_plus$JsonApi$HrefLink(_p0._1._0)
+		};
+	}
+};

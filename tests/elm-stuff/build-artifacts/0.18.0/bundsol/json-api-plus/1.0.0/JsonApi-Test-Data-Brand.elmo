@@ -1,0 +1,215 @@
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$newComer = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('brand')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'attributes',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+				{
+					ctor: '::',
+					_0: A2(
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+						'name',
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('New Comer')),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'opinion',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Very Competitive')),
+						_1: {ctor: '[]'}
+					}
+				})),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'meta',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'new-resource-tag',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('AAAABBBB')),
+						_1: {ctor: '[]'}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$rumT = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('brand')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('13')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Rum-T')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'opinion',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Affordable, yet good')),
+							_1: {ctor: '[]'}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$maryO = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('brand')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('8')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Mary-O')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'opinion',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Turkey specialist, not expensive')),
+							_1: {ctor: '[]'}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$wittyChicken = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('brand')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('12')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Witty Chicken')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'opinion',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Another kind of freshness')),
+							_1: {ctor: '[]'}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$horizon = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('brand')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('21')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Horizon')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'opinion',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Not my first choice')),
+							_1: {ctor: '[]'}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brands = {
+	ctor: '::',
+	_0: _bundsol$json_api_plus$JsonApi_Test_Data_Brand$horizon,
+	_1: {
+		ctor: '::',
+		_0: _bundsol$json_api_plus$JsonApi_Test_Data_Brand$wittyChicken,
+		_1: {
+			ctor: '::',
+			_0: _bundsol$json_api_plus$JsonApi_Test_Data_Brand$rumT,
+			_1: {
+				ctor: '::',
+				_0: _bundsol$json_api_plus$JsonApi_Test_Data_Brand$maryO,
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brand_ids = A2(
+	_elm_lang$core$List$map,
+	_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o,
+	A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$takeId, _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brands));
+var _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brand_objects = A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$o, _bundsol$json_api_plus$JsonApi_Test_Data_Brand$brands);

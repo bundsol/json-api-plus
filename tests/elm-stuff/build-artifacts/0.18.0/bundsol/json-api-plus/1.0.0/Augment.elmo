@@ -1,0 +1,99 @@
+var _bundsol$json_api_plus$Augment$createJustTheOne = function (name) {
+	return A2(
+		_elm_community$elm_test$Test$test,
+		name,
+		function (_p0) {
+			var parent = _bundsol$json_api_plus$JsonApi_Test_SampleData$userGuide;
+			var didNotHaveOne = _elm_lang$core$Native_Utils.eq(
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdr, 'my-little-phony', parent),
+				_elm_lang$core$Maybe$Nothing);
+			var child = A3(_bundsol$json_api_plus$JsonApi_Relationship$createSingle, 'phony', 'my-little-phony', parent);
+			var childDoesNotHaveOne = _elm_lang$core$Native_Utils.eq(
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdr, 'my-little-phony', child),
+				_elm_lang$core$Maybe$Nothing);
+			var newParent = A2(_bundsol$json_api_plus$JsonApi$updateIdr, parent.idr, child);
+			var typeAsSeenByParent = A2(
+				_elm_lang$core$Maybe$andThen,
+				_bundsol$json_api_plus$JsonApi$getType,
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdr, 'my-little-phony', newParent));
+			var overWritten = A2(
+				_elm_lang$core$Maybe$andThen,
+				_bundsol$json_api_plus$JsonApi$getType,
+				A2(
+					_bundsol$json_api_plus$JsonApi_Relationship$getIdr,
+					'my-little-phony',
+					A2(
+						_bundsol$json_api_plus$JsonApi$updateIdr,
+						parent.idr,
+						A3(_bundsol$json_api_plus$JsonApi_Relationship$createSingle, 'real-pony', 'my-little-phony', parent))));
+			return A2(
+				_elm_community$elm_test$Expect$equal,
+				{ctor: '_Tuple4', _0: didNotHaveOne, _1: childDoesNotHaveOne, _2: typeAsSeenByParent, _3: overWritten},
+				{
+					ctor: '_Tuple4',
+					_0: true,
+					_1: true,
+					_2: _elm_lang$core$Maybe$Just('phony'),
+					_3: _elm_lang$core$Maybe$Just('real-pony')
+				});
+		});
+};
+var _bundsol$json_api_plus$Augment$createOne = function (name) {
+	return A2(
+		_elm_community$elm_test$Test$test,
+		name,
+		function (_p1) {
+			var parent = A3(_bundsol$json_api_plus$JsonApi_Relationship$incorporate, 'phonies', _bundsol$json_api_plus$JsonApi_Test_SampleData$fetched, _bundsol$json_api_plus$JsonApi_Test_SampleData$userGuide);
+			var orginalLength = _elm_lang$core$List$length(
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdrs, 'phonies', parent));
+			var child = A3(_bundsol$json_api_plus$JsonApi_Relationship$createOneMore, 'phony', 'phonies', parent);
+			var childChildren = _elm_lang$core$List$length(
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdrs, 'phonies', child));
+			var newParent = A2(_bundsol$json_api_plus$JsonApi$updateIdr, parent.idr, child);
+			var newLength = _elm_lang$core$List$length(
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdrs, 'phonies', newParent));
+			var amongChildren = A2(
+				_elm_lang$core$List$any,
+				_bundsol$json_api_plus$JsonApi$equal(child.idr),
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdrs, 'phonies', newParent));
+			return A2(
+				_elm_community$elm_test$Expect$equal,
+				{ctor: '_Tuple4', _0: orginalLength, _1: childChildren, _2: newLength, _3: amongChildren},
+				{ctor: '_Tuple4', _0: 3, _1: 0, _2: 4, _3: true});
+		});
+};
+var _bundsol$json_api_plus$Augment$goodAugment = function (name) {
+	return A2(
+		_elm_community$elm_test$Test$test,
+		name,
+		function (_p2) {
+			var g = _bundsol$json_api_plus$JsonApi_Test_SampleData$userGuide;
+			var firstWeGot = _elm_lang$core$List$length(
+				A2(_bundsol$json_api_plus$JsonApi_Relationship$getIdrs, 'phonies', g));
+			var thenWeHave = _elm_lang$core$List$length(
+				A2(
+					_bundsol$json_api_plus$JsonApi_Relationship$getIdrs,
+					'phonies',
+					A3(_bundsol$json_api_plus$JsonApi_Relationship$incorporate, 'phonies', _bundsol$json_api_plus$JsonApi_Test_SampleData$fetched, g)));
+			return A2(
+				_elm_community$elm_test$Expect$equal,
+				{ctor: '_Tuple2', _0: firstWeGot, _1: thenWeHave},
+				{ctor: '_Tuple2', _0: 0, _1: 3});
+		});
+};
+var _bundsol$json_api_plus$Augment$suite = A2(
+	_elm_community$elm_test$Test$describe,
+	'Let document grow in objects',
+	{
+		ctor: '::',
+		_0: _bundsol$json_api_plus$Augment$goodAugment('Insert data from outside'),
+		_1: {
+			ctor: '::',
+			_0: _bundsol$json_api_plus$Augment$createOne('Insert one more child'),
+			_1: {
+				ctor: '::',
+				_0: _bundsol$json_api_plus$Augment$createJustTheOne('Insert a sole child'),
+				_1: {ctor: '[]'}
+			}
+		}
+	});

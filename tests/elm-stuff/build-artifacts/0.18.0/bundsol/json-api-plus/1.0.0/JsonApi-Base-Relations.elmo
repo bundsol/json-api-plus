@@ -1,0 +1,276 @@
+var _bundsol$json_api_plus$JsonApi_Base_Relations$toSureResourceList = function (aggregation) {
+	var build = F2(
+		function (item, accum) {
+			var _p0 = item;
+			if (_p0.ctor === 'Complete') {
+				return {ctor: '::', _0: _p0._0, _1: accum};
+			} else {
+				var _p1 = _p0._0;
+				return _bundsol$json_api_plus$JsonApi_Base_Accessor$isNew(_p1) ? {
+					ctor: '::',
+					_0: _bundsol$json_api_plus$JsonApi_Base_Definition$newResource(_p1),
+					_1: accum
+				} : accum;
+			}
+		});
+	return A3(
+		_elm_lang$core$List$foldl,
+		build,
+		{ctor: '[]'},
+		function () {
+			var _p2 = aggregation;
+			if (_p2.ctor === 'Multiple') {
+				return _p2._0;
+			} else {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					{ctor: '[]'},
+					A2(_elm_lang$core$Maybe$map, _elm_lang$core$List$singleton, _p2._0));
+			}
+		}());
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$keyFromEnt = function (entity) {
+	var _p3 = entity;
+	if (_p3.ctor === 'Identity') {
+		return _p3._0;
+	} else {
+		return _bundsol$json_api_plus$JsonApi_Base_Definition$toKey(_p3._0);
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$buildRelationship = function (aggregation) {
+	return {
+		links: {ctor: '[]'},
+		meta: {ctor: '[]'},
+		data: function () {
+			var _p4 = aggregation;
+			if (_p4.ctor === 'Multiple') {
+				return function (_p5) {
+					return _bundsol$json_api_plus$JsonApi_Base_Definition$Ids(
+						_elm_lang$core$Set$fromList(_p5));
+				}(
+					A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Base_Relations$keyFromEnt, _p4._0));
+			} else {
+				return function (_p6) {
+					return _bundsol$json_api_plus$JsonApi_Base_Definition$Id(
+						A2(_elm_lang$core$Maybe$map, _bundsol$json_api_plus$JsonApi_Base_Relations$keyFromEnt, _p6));
+				}(_p4._0);
+			}
+		}(),
+		isLocal: false
+	};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$addToRelationship = F2(
+	function (aggregation, r) {
+		return A2(
+			_bundsol$json_api_plus$JsonApi_Base_Modifier$setData,
+			r,
+			function () {
+				var _p7 = {ctor: '_Tuple2', _0: aggregation, _1: r.data};
+				_v4_5:
+				do {
+					if (_p7.ctor === '_Tuple2') {
+						if (_p7._0.ctor === 'Multiple') {
+							switch (_p7._1.ctor) {
+								case 'Id':
+									return r.data;
+								case 'Ids':
+									var _p8 = _p7._1._0;
+									var notExists = function (item) {
+										return !A2(
+											_elm_lang$core$Set$member,
+											_bundsol$json_api_plus$JsonApi_Base_Relations$keyFromEnt(item),
+											_p8);
+									};
+									return _bundsol$json_api_plus$JsonApi_Base_Definition$Ids(
+										A2(
+											_elm_lang$core$Set$union,
+											_p8,
+											_elm_lang$core$Set$fromList(
+												A2(
+													_elm_lang$core$List$map,
+													_bundsol$json_api_plus$JsonApi_Base_Relations$keyFromEnt,
+													A2(_elm_lang$core$List$filter, notExists, _p7._0._0)))));
+								default:
+									break _v4_5;
+							}
+						} else {
+							if (_p7._0._0.ctor === 'Nothing') {
+								return _bundsol$json_api_plus$JsonApi_Base_Definition$Id(_elm_lang$core$Maybe$Nothing);
+							} else {
+								switch (_p7._1.ctor) {
+									case 'Ids':
+										return r.data;
+									case 'Id':
+										return function (_p9) {
+											return _bundsol$json_api_plus$JsonApi_Base_Definition$Id(
+												_elm_lang$core$Maybe$Just(_p9));
+										}(
+											_bundsol$json_api_plus$JsonApi_Base_Relations$keyFromEnt(_p7._0._0._0));
+									default:
+										break _v4_5;
+								}
+							}
+						}
+					} else {
+						break _v4_5;
+					}
+				} while(false);
+				return r.data;
+			}());
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Relations$insertIntoRelationships = F3(
+	function (field, aggregation, rs) {
+		return function (r) {
+			return A3(_elm_lang$core$Dict$insert, field, r, rs);
+		}(
+			A2(
+				_elm_lang$core$Maybe$withDefault,
+				_bundsol$json_api_plus$JsonApi_Base_Relations$buildRelationship(aggregation),
+				A2(
+					_elm_lang$core$Maybe$map,
+					_bundsol$json_api_plus$JsonApi_Base_Relations$addToRelationship(aggregation),
+					A2(_elm_lang$core$Dict$get, field, rs))));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Relations$addRelated = F4(
+	function (idKey, field, aggregation, doc) {
+		var newIncluded = A2(
+			_elm_lang$core$Dict$union,
+			doc.included,
+			_elm_lang$core$Dict$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_bundsol$json_api_plus$JsonApi_Base_Definition$toEntry,
+					_bundsol$json_api_plus$JsonApi_Base_Relations$toSureResourceList(aggregation))));
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Base_Modifier$modifyRelationships,
+			idKey,
+			A2(_bundsol$json_api_plus$JsonApi_Base_Relations$insertIntoRelationships, field, aggregation),
+			_elm_lang$core$Native_Utils.update(
+				doc,
+				{included: newIncluded}));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Relations$getPrimaryResources = function (doc) {
+	var _p10 = doc.data;
+	if (_p10.ctor === 'Ids') {
+		var build = F2(
+			function (idKey, accum) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					accum,
+					A2(
+						_elm_lang$core$Maybe$map,
+						A2(
+							_elm_lang$core$Basics$flip,
+							F2(
+								function (x, y) {
+									return {ctor: '::', _0: x, _1: y};
+								}),
+							accum),
+						A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getResource, idKey, doc)));
+			});
+		return A3(
+			_elm_lang$core$Set$foldl,
+			build,
+			{ctor: '[]'},
+			_p10._0);
+	} else {
+		return {ctor: '[]'};
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$getPrimaryResource = function (doc) {
+	return A2(
+		_elm_lang$core$Maybe$andThen,
+		A2(_elm_lang$core$Basics$flip, _bundsol$json_api_plus$JsonApi_Base_Accessor$getResource, doc),
+		_bundsol$json_api_plus$JsonApi_Base_Accessor$idKeyFromData(doc));
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$createIncludedId = F2(
+	function (type_, doc) {
+		return A3(
+			_bundsol$json_api_plus$JsonApi_Base_Definition$buildKey,
+			type_,
+			'',
+			_bundsol$json_api_plus$JsonApi_Base_Utility$findSpot(
+				A3(
+					_elm_lang$core$Dict$foldl,
+					_bundsol$json_api_plus$JsonApi_Base_Modifier$insertTagIfType(type_),
+					{ctor: '[]'},
+					doc.included)));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Relations$Identity = function (a) {
+	return {ctor: 'Identity', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$Complete = function (a) {
+	return {ctor: 'Complete', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$Single = function (a) {
+	return {ctor: 'Single', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$Multiple = function (a) {
+	return {ctor: 'Multiple', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Relations$incorporate = F4(
+	function (idKey, field, source, doc) {
+		var performCopy = function (aggregation) {
+			return A4(_bundsol$json_api_plus$JsonApi_Base_Relations$addRelated, idKey, field, aggregation, doc);
+		};
+		var _p11 = {
+			ctor: '_Tuple2',
+			_0: _bundsol$json_api_plus$JsonApi_Base_Relations$getPrimaryResource(source),
+			_1: _bundsol$json_api_plus$JsonApi_Base_Relations$getPrimaryResources(source)
+		};
+		if (_p11._0.ctor === 'Just') {
+			return performCopy(
+				_bundsol$json_api_plus$JsonApi_Base_Relations$Single(
+					_elm_lang$core$Maybe$Just(
+						_bundsol$json_api_plus$JsonApi_Base_Relations$Complete(_p11._0._0))));
+		} else {
+			if (_p11._1.ctor === '[]') {
+				return doc;
+			} else {
+				return performCopy(
+					_bundsol$json_api_plus$JsonApi_Base_Relations$Multiple(
+						A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Base_Relations$Complete, _p11._1)));
+			}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Relations$relate = F5(
+	function (idKey, field, isSingle, source, doc) {
+		return A2(
+			F2(
+				function (x, y) {
+					return y(x);
+				}),
+			doc,
+			A3(
+				_bundsol$json_api_plus$JsonApi_Base_Relations$addRelated,
+				idKey,
+				field,
+				isSingle ? _bundsol$json_api_plus$JsonApi_Base_Relations$Single(
+					_elm_lang$core$Maybe$Just(
+						_bundsol$json_api_plus$JsonApi_Base_Relations$Identity(source))) : _bundsol$json_api_plus$JsonApi_Base_Relations$Multiple(
+					{
+						ctor: '::',
+						_0: _bundsol$json_api_plus$JsonApi_Base_Relations$Identity(source),
+						_1: {ctor: '[]'}
+					})));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Relations$createOne = F5(
+	function (idKey, field, isSingle, type_, doc) {
+		if (_elm_lang$core$String$isEmpty(
+			_elm_lang$core$String$trim(type_))) {
+			return {
+				ctor: '_Tuple2',
+				_0: A3(_bundsol$json_api_plus$JsonApi_Base_Definition$buildKey, '', '', 0),
+				_1: doc
+			};
+		} else {
+			var newIdKey = A2(_bundsol$json_api_plus$JsonApi_Base_Relations$createIncludedId, type_, doc);
+			return A2(
+				F2(
+					function (v0, v1) {
+						return {ctor: '_Tuple2', _0: v0, _1: v1};
+					}),
+				newIdKey,
+				A5(_bundsol$json_api_plus$JsonApi_Base_Relations$relate, idKey, field, isSingle, newIdKey, doc));
+		}
+	});

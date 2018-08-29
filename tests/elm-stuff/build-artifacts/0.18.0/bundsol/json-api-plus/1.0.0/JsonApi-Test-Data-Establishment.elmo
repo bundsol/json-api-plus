@@ -1,0 +1,109 @@
+var _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$twinTown = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('establishment')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('4')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Bob\'s Corner')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'address',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('4156 Aspen Ave')),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'city',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Warner')),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'state',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('OK')),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$favoriteStore = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('establishment')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('3')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Dollar Bargain')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'location',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Optimist Mall')),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'city',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Muskogee')),
+								_1: {ctor: '[]'}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishments = {
+	ctor: '::',
+	_0: _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$favoriteStore,
+	_1: {
+		ctor: '::',
+		_0: _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$twinTown,
+		_1: {ctor: '[]'}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishmentIds = A2(
+	_elm_lang$core$List$map,
+	_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o,
+	A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$takeId, _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishments));
+var _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishment_objects = A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$o, _bundsol$json_api_plus$JsonApi_Test_Data_Establishment$establishments);

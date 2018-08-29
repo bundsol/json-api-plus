@@ -1,0 +1,86 @@
+var _bundsol$json_api_plus$JsonApi_Base_Definition$fuse = F2(
+	function (_p0, obj) {
+		var _p1 = _p0;
+		return {type_: _p1._0, id: _p1._1, attributes: obj.attributes, local: obj.local, relationships: obj.relationships, links: obj.links, meta: obj.meta, newTag: _p1._2};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$toComplement = function (object) {
+	return {attributes: object.attributes, local: object.attributes, relationships: object.relationships, links: object.links, meta: object.meta, deleted: false};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$emptyComplement = {
+	attributes: _elm_lang$core$Dict$empty,
+	local: _elm_lang$core$Dict$empty,
+	relationships: _elm_lang$core$Dict$empty,
+	links: {ctor: '[]'},
+	meta: {ctor: '[]'},
+	deleted: false
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$newResource = function (idKey) {
+	return A2(_bundsol$json_api_plus$JsonApi_Base_Definition$fuse, idKey, _bundsol$json_api_plus$JsonApi_Base_Definition$emptyComplement);
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$buildKey = F3(
+	function (type_, id, spot) {
+		return {ctor: '_Tuple3', _0: type_, _1: id, _2: spot};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$toKey = function (ro) {
+	return A3(_bundsol$json_api_plus$JsonApi_Base_Definition$buildKey, ro.type_, ro.id, ro.newTag);
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$toEntry = function (ro) {
+	return {
+		ctor: '_Tuple2',
+		_0: _bundsol$json_api_plus$JsonApi_Base_Definition$toKey(ro),
+		_1: _bundsol$json_api_plus$JsonApi_Base_Definition$toComplement(ro)
+	};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Href = F2(
+	function (a, b) {
+		return {href: a, meta: b};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Relationship = F4(
+	function (a, b, c, d) {
+		return {data: a, links: b, meta: c, isLocal: d};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Complement = F6(
+	function (a, b, c, d, e, f) {
+		return {attributes: a, local: b, meta: c, links: d, relationships: e, deleted: f};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$JsonApiVersion = F2(
+	function (a, b) {
+		return {version: a, meta: b};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Error = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {id: a, links: b, status: c, code: d, title: e, detail: f, source: g, meta: h};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Document = F7(
+	function (a, b, c, d, e, f, g) {
+		return {meta: a, jsonapi: b, data: c, links: d, included: e, errors: f, method_: g};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$DocTypeTaggers = F3(
+	function (a, b, c) {
+		return {data: a, errors: b, meta: c};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Definition$NotPresent = {ctor: 'NotPresent'};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$emptyDocument = {
+	meta: {ctor: '[]'},
+	jsonapi: A2(
+		_bundsol$json_api_plus$JsonApi_Base_Definition$JsonApiVersion,
+		'1.0',
+		{ctor: '[]'}),
+	data: _bundsol$json_api_plus$JsonApi_Base_Definition$NotPresent,
+	links: {ctor: '[]'},
+	included: _elm_lang$core$Dict$empty,
+	errors: {ctor: '[]'},
+	method_: _elm_lang$core$Maybe$Nothing
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Id = function (a) {
+	return {ctor: 'Id', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$Ids = function (a) {
+	return {ctor: 'Ids', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$HrefLink = function (a) {
+	return {ctor: 'HrefLink', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Definition$UrlLink = function (a) {
+	return {ctor: 'UrlLink', _0: a};
+};

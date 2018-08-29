@@ -1,0 +1,127 @@
+var _bundsol$boxed$Boxed_Json$primitiveEncoder = function (boxed) {
+	var _p0 = boxed;
+	switch (_p0.ctor) {
+		case 'Boolean':
+			return _elm_lang$core$Json_Encode$bool(_p0._0);
+		case 'Integer':
+			return _elm_lang$core$Json_Encode$int(_p0._0);
+		case 'Double':
+			return _elm_lang$core$Json_Encode$float(_p0._0);
+		case 'Str':
+			return _elm_lang$core$Json_Encode$string(_p0._0);
+		case 'Json':
+			return _p0._0;
+		default:
+			return _elm_lang$core$Json_Encode$null;
+	}
+};
+var _bundsol$boxed$Boxed_Json$encoder = function (boxed) {
+	var _p1 = boxed;
+	switch (_p1.ctor) {
+		case 'Lst':
+			return _elm_lang$core$Json_Encode$list(
+				A2(_elm_lang$core$List$map, _bundsol$boxed$Boxed_Json$encoder, _p1._0));
+		case 'Dictionary':
+			return _elm_lang$core$Json_Encode$object(
+				_elm_lang$core$Dict$toList(
+					A2(
+						_elm_lang$core$Dict$map,
+						F2(
+							function (k, v) {
+								return _bundsol$boxed$Boxed_Json$encoder(v);
+							}),
+						_p1._0)));
+		default:
+			return _bundsol$boxed$Boxed_Json$primitiveEncoder(boxed);
+	}
+};
+var _bundsol$boxed$Boxed_Json$primitives = {
+	ctor: '::',
+	_0: _elm_lang$core$Json_Decode$null(_bundsol$boxed$Boxed$Null),
+	_1: {
+		ctor: '::',
+		_0: A2(_elm_lang$core$Json_Decode$map, _bundsol$boxed$Boxed$Boolean, _elm_lang$core$Json_Decode$bool),
+		_1: {
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$map, _bundsol$boxed$Boxed$Integer, _elm_lang$core$Json_Decode$int),
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$core$Json_Decode$map, _bundsol$boxed$Boxed$Double, _elm_lang$core$Json_Decode$float),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$core$Json_Decode$map, _bundsol$boxed$Boxed$Str, _elm_lang$core$Json_Decode$string),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	}
+};
+var _bundsol$boxed$Boxed_Json$primitiveDecoder = _elm_lang$core$Json_Decode$oneOf(_bundsol$boxed$Boxed_Json$primitives);
+var _bundsol$boxed$Boxed_Json$defaultDecoder = _elm_lang$core$Json_Decode$oneOf(
+	A2(
+		_elm_lang$core$Basics_ops['++'],
+		_bundsol$boxed$Boxed_Json$primitives,
+		{
+			ctor: '::',
+			_0: A2(_elm_lang$core$Json_Decode$map, _bundsol$boxed$Boxed$Json, _elm_lang$core$Json_Decode$value),
+			_1: {ctor: '[]'}
+		}));
+var _bundsol$boxed$Boxed_Json$decoder = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$core$Json_Decode$map,
+			_bundsol$boxed$Boxed$Lst,
+			_elm_lang$core$Json_Decode$list(_bundsol$boxed$Boxed_Json$primitiveDecoder)),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$core$Json_Decode$map,
+				_bundsol$boxed$Boxed$Dictionary,
+				_elm_lang$core$Json_Decode$dict(_bundsol$boxed$Boxed_Json$primitiveDecoder)),
+			_1: {
+				ctor: '::',
+				_0: _bundsol$boxed$Boxed_Json$defaultDecoder,
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _bundsol$boxed$Boxed_Json$expand = function (boxed) {
+	var repeat = _elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$core$Json_Decode$map,
+				_bundsol$boxed$Boxed$Lst,
+				_elm_lang$core$Json_Decode$list(
+					_elm_lang$core$Json_Decode$lazy(
+						function (_p2) {
+							return repeat;
+						}))),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Json_Decode$map,
+					_bundsol$boxed$Boxed$Dictionary,
+					_elm_lang$core$Json_Decode$dict(
+						_elm_lang$core$Json_Decode$lazy(
+							function (_p3) {
+								return repeat;
+							}))),
+				_1: {
+					ctor: '::',
+					_0: _bundsol$boxed$Boxed_Json$defaultDecoder,
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+	var _p4 = boxed;
+	if (_p4.ctor === 'Json') {
+		return A2(
+			_elm_lang$core$Result$withDefault,
+			boxed,
+			A2(_elm_lang$core$Json_Decode$decodeValue, repeat, _p4._0));
+	} else {
+		return boxed;
+	}
+};

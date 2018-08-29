@@ -1,0 +1,96 @@
+var _bundsol$json_api_plus$JsonApi_Base_Http$RequestDef = F7(
+	function (a, b, c, d, e, f, g) {
+		return {method: a, headers: b, url: c, body: d, expect: e, timeout: f, withCredentials: g};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Http$request = F6(
+	function (encoder, decoder, taggers, method, headers, url) {
+		var _p0 = function () {
+			var _p1 = method;
+			switch (_p1.ctor) {
+				case 'Post':
+					return {
+						ctor: '_Tuple2',
+						_0: 'POST',
+						_1: A2(_bundsol$json_api_plus$JsonApi_Base_Core$docEncoder, encoder, _p1._0)
+					};
+				case 'Get':
+					return {
+						ctor: '_Tuple2',
+						_0: 'GET',
+						_1: _elm_lang$core$Json_Encode$string('')
+					};
+				case 'Put':
+					return {
+						ctor: '_Tuple2',
+						_0: 'PUT',
+						_1: A2(
+							_bundsol$json_api_plus$JsonApi_Base_Core$docEncoder,
+							encoder,
+							A2(
+								_bundsol$json_api_plus$JsonApi_Base_Core$updateMethod,
+								_p1._0,
+								_elm_lang$core$Maybe$Just('PUT')))
+					};
+				case 'Patch':
+					return {
+						ctor: '_Tuple2',
+						_0: 'PUT',
+						_1: A2(
+							_bundsol$json_api_plus$JsonApi_Base_Core$docEncoder,
+							encoder,
+							A2(
+								_bundsol$json_api_plus$JsonApi_Base_Core$updateMethod,
+								_p1._0,
+								_elm_lang$core$Maybe$Just('PATCH')))
+					};
+				default:
+					return {
+						ctor: '_Tuple2',
+						_0: 'POST',
+						_1: _elm_lang$core$Json_Encode$object(
+							{
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: '_method',
+									_1: _elm_lang$core$Json_Encode$string('DELETE')
+								},
+								_1: {ctor: '[]'}
+							})
+					};
+			}
+		}();
+		var strMethod = _p0._0;
+		var value = _p0._1;
+		var stringValue = A2(_elm_lang$core$Json_Encode$encode, 0, value);
+		var body = A2(_elm_lang$http$Http$stringBody, 'application/vnd.api+json', stringValue);
+		var requestDef = A7(
+			_bundsol$json_api_plus$JsonApi_Base_Http$RequestDef,
+			strMethod,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(_elm_lang$http$Http$header, 'Accept', 'application/vnd.api+json'),
+					_1: {ctor: '[]'}
+				},
+				headers),
+			url,
+			body,
+			_elm_lang$http$Http$expectJson(
+				A2(_bundsol$json_api_plus$JsonApi_Base_Core$docDecoder, decoder, taggers)),
+			_elm_lang$core$Maybe$Nothing,
+			false);
+		return _elm_lang$http$Http$request(requestDef);
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Http$Patch = function (a) {
+	return {ctor: 'Patch', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Http$Put = function (a) {
+	return {ctor: 'Put', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Http$Post = function (a) {
+	return {ctor: 'Post', _0: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Http$Delete = {ctor: 'Delete'};
+var _bundsol$json_api_plus$JsonApi_Base_Http$Get = {ctor: 'Get'};

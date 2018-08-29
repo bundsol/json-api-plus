@@ -1,0 +1,107 @@
+module JsonApi.Base.Filter exposing (..)
+
+import JsonApi.Base.Definition exposing 
+  ( IDKey, Data(..)
+  , Relationships
+  , Document
+  , PropertyDescriptor
+  , PropertyTest
+  , Test
+  , RelationshipDescriptor
+  , IdTagger
+  )
+import JsonApi.Base.Accessor exposing (..)
+import JsonApi.Base.Modifier exposing (..)
+import JsonApi.Base.Utility exposing (tuplicate)
+import Dict
+import Set exposing (Set )
+import List exposing (foldl, concat, map, isEmpty,filter)
+import Maybe exposing (withDefault)
+import String exposing (startsWith)
+
+
+
+
+filterRelationships : IdTagger i -> RelationshipDescriptor rf i -> Test rf -> IDKey -> Relationships a -> Relationships a
+filterRelationships tagger constructor test (type_, _,_) relationships =
+  let 
+    buildField fieldName idKey =
+      constructor type_ fieldName (tagger idKey)
+    build field rel accum = 
+      case rel.data of 
+        Id (Just idKey) -> 
+          if test (buildField field idKey)  then 
+            Dict.insert field rel accum
+          else 
+            accum
+        Ids keySet -> 
+          let 
+            newSet = 
+              Set.filter (test << buildField field) keySet
+          in 
+            if Set.isEmpty newSet then 
+              accum
+            else 
+              Dict.insert field {rel | data = Ids newSet} accum
+        _-> accum
+  in     
+    Dict.foldl build Dict.empty relationships
+
+
+
+
+
+
+filterAllRelationships : IdTagger i -> RelationshipDescriptor rf i  -> Test rf -> Document a -> Document a 
+filterAllRelationships tagger constructor test  doc =
+  let 
+    applyTest parent rels =
+      filterRelationships
+        tagger
+        constructor 
+        test 
+        parent
+        rels
+    build parent  accum =
+      modifyRelationships parent (applyTest parent) accum
+    repeat keyList (document, visitedSet) =
+      if isEmpty keyList then 
+        (document, visitedSet)
+      else 
+        let 
+          newDoc =
+            foldl build document keyList
+          newKeyList =
+            map (nonLocalRelationshipsIds newDoc) keyList
+            |> concat
+            |> filter (not << ((flip Set.member) visitedSet))
+          newVisitedSet = 
+            Set.union visitedSet (Set.fromList newKeyList)
+        in 
+          repeat newKeyList (newDoc, newVisitedSet)
+    initialList = 
+      withDataToKeyList doc
+    (newDoc, visitedSet) = 
+      repeat initialList (doc, Set.fromList initialList)
+    included = 
+      Dict.filter (\k v -> Set.member k visitedSet) newDoc.included
+  in
+    {newDoc | included = included}
+
+
+
+    
+
+filterAllProperties : PropertyTest a -> Document a -> Document a
+filterAllProperties validator doc =
+  let 
+    prepare type_ fieldName value =
+      validator (PropertyDescriptor type_ fieldName value)
+    changeProperties (type_, _, _) c =
+      { c | attributes = Dict.filter (prepare type_) c.attributes}
+    included = 
+      Dict.map changeProperties doc.included
+  in 
+    {doc | included = included}
+  
+

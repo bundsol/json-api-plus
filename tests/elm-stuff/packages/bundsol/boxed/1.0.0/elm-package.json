@@ -1,0 +1,19 @@
+{
+    "version": "1.0.0",
+    "summary": "An Elm library to encapsulate any primitive in a single type",
+    "repository": "https://github.com/bundsol/boxed.git",
+    "license": "BSD3",
+    "source-directories": [
+        "src", "src/Boxed"
+    ],
+    "exposed-modules":  [
+      "Boxed",
+      "Boxed.Dictionary",
+      "Boxed.Lst",
+      "Boxed.Json"
+    ],
+    "dependencies": {
+        "elm-lang/core": "5.1.1 <= v < 6.0.0"
+    },
+    "elm-version": "0.18.0 <= v < 0.19.0"
+}

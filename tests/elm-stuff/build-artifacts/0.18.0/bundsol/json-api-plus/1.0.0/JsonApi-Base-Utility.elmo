@@ -1,0 +1,118 @@
+var _bundsol$json_api_plus$JsonApi_Base_Utility$dropSecond = function (simpleF) {
+	var $function = F2(
+		function (a, b) {
+			return simpleF(a);
+		});
+	return $function;
+};
+var _bundsol$json_api_plus$JsonApi_Base_Utility$tuplicate = function (a) {
+	return {ctor: '_Tuple2', _0: a, _1: a};
+};
+var _bundsol$json_api_plus$JsonApi_Base_Utility$findWithOneIndex = F2(
+	function (test, list) {
+		var next = F2(
+			function (count, l) {
+				next:
+				while (true) {
+					var _p0 = l;
+					if (_p0.ctor === '[]') {
+						return _elm_lang$core$Maybe$Nothing;
+					} else {
+						var _p1 = _p0._0;
+						if (A2(test, count, _p1)) {
+							return _elm_lang$core$Maybe$Just(
+								{ctor: '_Tuple2', _0: count, _1: _p1});
+						} else {
+							var _v1 = count + 1,
+								_v2 = _p0._1;
+							count = _v1;
+							l = _v2;
+							continue next;
+						}
+					}
+				}
+			});
+		return A2(next, 1, list);
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Utility$findSpot = function (list) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		1,
+		A2(
+			_elm_lang$core$Maybe$map,
+			_elm_lang$core$Tuple$first,
+			A2(
+				_bundsol$json_api_plus$JsonApi_Base_Utility$findWithOneIndex,
+				F2(
+					function (x, y) {
+						return !_elm_lang$core$Native_Utils.eq(x, y);
+					}),
+				_elm_lang$core$List$sort(
+					A2(
+						_elm_lang$core$List$filter,
+						A2(
+							_elm_lang$core$Basics$flip,
+							F2(
+								function (x, y) {
+									return _elm_lang$core$Native_Utils.cmp(x, y) > 0;
+								}),
+							0),
+						list)))));
+};
+var _bundsol$json_api_plus$JsonApi_Base_Utility$find = F2(
+	function (test, list) {
+		find:
+		while (true) {
+			var _p2 = list;
+			if (_p2.ctor === '[]') {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var _p3 = _p2._0;
+				if (test(_p3)) {
+					return _elm_lang$core$Maybe$Just(_p3);
+				} else {
+					var _v4 = test,
+						_v5 = _p2._1;
+					test = _v4;
+					list = _v5;
+					continue find;
+				}
+			}
+		}
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Utility$Bag5 = F5(
+	function (a, b, c, d, e) {
+		return {a1: a, a2: b, a3: c, a4: d, a5: e};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Utility$dmap9 = function (f) {
+	return function (d1) {
+		return function (d2) {
+			return function (d3) {
+				return function (d4) {
+					return function (d5) {
+						return function (d6) {
+							return function (d7) {
+								return function (d8) {
+									return function (d9) {
+										return A2(
+											_elm_lang$core$Json_Decode$andThen,
+											function (b) {
+												return A5(
+													_elm_lang$core$Json_Decode$map4,
+													A5(f, b.a1, b.a2, b.a3, b.a4, b.a5),
+													d6,
+													d7,
+													d8,
+													d9);
+											},
+											A6(_elm_lang$core$Json_Decode$map5, _bundsol$json_api_plus$JsonApi_Base_Utility$Bag5, d1, d2, d3, d4, d5));
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};

@@ -1,0 +1,66 @@
+var _bundsol$json_api_plus$New$decodeGuide = function (json) {
+	var decodedResult = A2(_elm_lang$core$Json_Decode$decodeValue, _bundsol$json_api_plus$JsonApi$docDecoder, json);
+	var _p0 = decodedResult;
+	if (((((_p0.ctor === 'Ok') && (_p0._0.ctor === '_Tuple2')) && (_p0._0._0.ctor === 'DataDoc')) && (_p0._0._0._0.ctor === 'Single')) && (_p0._0._0._0._0.ctor === 'Just')) {
+		return {doc: _p0._0._1, idr: _p0._0._0._0._0._0};
+	} else {
+		return {doc: _bundsol$json_api_plus$JsonApi_TopLevel$emptyDocument, idr: _bundsol$json_api_plus$JsonApi$emptyIdr};
+	}
+};
+var _bundsol$json_api_plus$New$intoJson = function (doc) {
+	return A2(_bundsol$json_api_plus$JsonApi_Base_Core$docEncoder, _bundsol$boxed$Boxed_Json$encoder, doc);
+};
+var _bundsol$json_api_plus$New$suite = A2(
+	_elm_community$elm_test$Test$describe,
+	'TopLevel Decoding',
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_community$elm_test$Test$test,
+			'verify you got the right new object',
+			function (_p1) {
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_elm_lang$core$Maybe$Just(
+						_bundsol$boxed$Boxed$Str('New Comer')),
+					A2(
+						_elm_lang$core$Maybe$andThen,
+						_elm_lang$core$Dict$get('name'),
+						A2(
+							_elm_lang$core$Maybe$map,
+							function (_) {
+								return _.attributes;
+							},
+							A2(
+								_bundsol$json_api_plus$JsonApi_Getter$reachObject,
+								{
+									ctor: '::',
+									_0: 'loser-brand',
+									_1: {ctor: '[]'}
+								},
+								_bundsol$json_api_plus$JsonApi_Test_NewData$newPurchaseGuide))));
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$test,
+				'new object survive re-decoding',
+				function (_p2) {
+					return A2(
+						_elm_community$elm_test$Expect$equal,
+						'New Comer',
+						A4(
+							_bundsol$json_api_plus$JsonApi_Getter$reachDefaultString,
+							'WRONG GGG',
+							{
+								ctor: '::',
+								_0: 'loser-brand',
+								_1: {ctor: '[]'}
+							},
+							'name',
+							_bundsol$json_api_plus$New$decodeGuide(
+								_bundsol$json_api_plus$New$intoJson(_bundsol$json_api_plus$JsonApi_Test_NewData$newPurchaseGuide.doc))));
+				}),
+			_1: {ctor: '[]'}
+		}
+	});

@@ -1,0 +1,362 @@
+var _bundsol$json_api_plus$JsonApi_Base_Encode$makeLinkage = F2(
+	function (isPrimary, _p0) {
+		var _p1 = _p0;
+		var idInfo = function () {
+			var _p2 = {
+				ctor: '_Tuple2',
+				_0: isPrimary,
+				_1: _bundsol$json_api_plus$JsonApi_Base_Accessor$isNew(_p1)
+			};
+			if (_p2._1 === true) {
+				if (_p2._0 === true) {
+					return {ctor: '[]'};
+				} else {
+					return {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'meta',
+							_1: _elm_lang$core$Json_Encode$object(
+								{
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'new-resource-tag',
+										_1: _elm_lang$core$Json_Encode$string(
+											_elm_lang$core$Basics$toString(_p1._2))
+									},
+									_1: {ctor: '[]'}
+								})
+						},
+						_1: {ctor: '[]'}
+					};
+				}
+			} else {
+				return {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'id',
+						_1: _elm_lang$core$Json_Encode$string(_p1._1)
+					},
+					_1: {ctor: '[]'}
+				};
+			}
+		}();
+		return {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'type',
+				_1: _elm_lang$core$Json_Encode$string(_p1._0)
+			},
+			_1: idInfo
+		};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$encodeRelationship = function (_p3) {
+	var _p4 = _p3;
+	return A2(
+		F2(
+			function (v0, v1) {
+				return {ctor: '_Tuple2', _0: v0, _1: v1};
+			}),
+		_p4._0,
+		_elm_lang$core$Json_Encode$object(
+			_elm_lang$core$List$singleton(
+				A2(
+					F2(
+						function (v0, v1) {
+							return {ctor: '_Tuple2', _0: v0, _1: v1};
+						}),
+					'data',
+					function () {
+						var _p5 = _p4._1.data;
+						_v3_2:
+						do {
+							switch (_p5.ctor) {
+								case 'Ids':
+									return _elm_lang$core$Json_Encode$list(
+										A2(
+											_elm_lang$core$List$map,
+											function (_p6) {
+												return _elm_lang$core$Json_Encode$object(
+													A2(_bundsol$json_api_plus$JsonApi_Base_Encode$makeLinkage, false, _p6));
+											},
+											_elm_lang$core$Set$toList(_p5._0)));
+								case 'Id':
+									if (_p5._0.ctor === 'Just') {
+										return _elm_lang$core$Json_Encode$object(
+											A2(_bundsol$json_api_plus$JsonApi_Base_Encode$makeLinkage, false, _p5._0._0));
+									} else {
+										break _v3_2;
+									}
+								default:
+									break _v3_2;
+							}
+						} while(false);
+						return _elm_lang$core$Json_Encode$null;
+					}()))));
+};
+var _bundsol$json_api_plus$JsonApi_Base_Encode$makeObject = F3(
+	function (encoder, isPrimary, _p7) {
+		var _p8 = _p7;
+		var _p12 = _p8._1;
+		var relationships = A2(
+			_elm_lang$core$List$map,
+			_bundsol$json_api_plus$JsonApi_Base_Encode$encodeRelationship,
+			A2(
+				_elm_lang$core$List$filter,
+				function (_p9) {
+					return !function (_) {
+						return _.isLocal;
+					}(
+						_elm_lang$core$Tuple$second(_p9));
+				},
+				_elm_lang$core$Dict$toList(_p12.relationships)));
+		var attributes = A2(
+			_elm_lang$core$List$map,
+			function (_p10) {
+				var _p11 = _p10;
+				return {
+					ctor: '_Tuple2',
+					_0: _p11._0,
+					_1: encoder(_p11._1)
+				};
+			},
+			_elm_lang$core$Dict$toList(_p12.attributes));
+		return _elm_lang$core$Json_Encode$object(
+			A2(
+				_elm_lang$core$List$append,
+				A2(_bundsol$json_api_plus$JsonApi_Base_Encode$makeLinkage, isPrimary, _p8._0),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'attributes',
+						_1: _elm_lang$core$Json_Encode$object(attributes)
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'relationships',
+							_1: _elm_lang$core$Json_Encode$object(relationships)
+						},
+						_1: {ctor: '[]'}
+					}
+				}));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$documentEncoder = F2(
+	function (encoder, doc) {
+		var primaryIds = _bundsol$json_api_plus$JsonApi_Base_Accessor$withDataToKeyList(doc);
+		var primarySet = _elm_lang$core$Set$fromList(primaryIds);
+		var primaryDataObjects = _elm_lang$core$Dict$toList(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, v) {
+						return A2(_elm_lang$core$Set$member, k, primarySet);
+					}),
+				doc.included));
+		var primaryDataJson = A2(
+			F2(
+				function (v0, v1) {
+					return {ctor: '_Tuple2', _0: v0, _1: v1};
+				}),
+			'data',
+			function () {
+				var _p13 = {ctor: '_Tuple2', _0: doc.data, _1: primaryDataObjects};
+				_v6_2:
+				do {
+					if (_p13.ctor === '_Tuple2') {
+						switch (_p13._0.ctor) {
+							case 'Ids':
+								return _elm_lang$core$Json_Encode$list(
+									A2(
+										_elm_lang$core$List$map,
+										A2(_bundsol$json_api_plus$JsonApi_Base_Encode$makeObject, encoder, true),
+										primaryDataObjects));
+							case 'Id':
+								if (((_p13._0._0.ctor === 'Just') && (_p13._1.ctor === '::')) && (_p13._1._1.ctor === '[]')) {
+									return A3(_bundsol$json_api_plus$JsonApi_Base_Encode$makeObject, encoder, true, _p13._1._0);
+								} else {
+									break _v6_2;
+								}
+							default:
+								break _v6_2;
+						}
+					} else {
+						break _v6_2;
+					}
+				} while(false);
+				return _elm_lang$core$Json_Encode$null;
+			}());
+		var repeat = F2(
+			function (keyList, visitedSet) {
+				repeat:
+				while (true) {
+					if (_elm_lang$core$List$isEmpty(keyList)) {
+						return visitedSet;
+					} else {
+						var newKeyList = A2(
+							_elm_lang$core$List$filter,
+							function (_p14) {
+								return !A3(_elm_lang$core$Basics$flip, _elm_lang$core$Set$member, visitedSet, _p14);
+							},
+							_elm_lang$core$List$concat(
+								A2(
+									_elm_lang$core$List$map,
+									_bundsol$json_api_plus$JsonApi_Base_Accessor$nonLocalRelationshipsIds(doc),
+									keyList)));
+						var newVisitedSet = A2(
+							_elm_lang$core$Set$union,
+							visitedSet,
+							_elm_lang$core$Set$fromList(newKeyList));
+						var _v7 = newKeyList,
+							_v8 = newVisitedSet;
+						keyList = _v7;
+						visitedSet = _v8;
+						continue repeat;
+					}
+				}
+			});
+		var includedIdSet = A2(
+			_elm_lang$core$Set$filter,
+			function (_p15) {
+				return !A3(_elm_lang$core$Basics$flip, _elm_lang$core$Set$member, primarySet, _p15);
+			},
+			A2(repeat, primaryIds, primarySet));
+		var includedObjects = _elm_lang$core$Dict$toList(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, v) {
+						return A2(_elm_lang$core$Set$member, k, includedIdSet);
+					}),
+				doc.included));
+		return _elm_lang$core$Json_Encode$object(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'meta',
+					_1: _elm_lang$core$Json_Encode$object(
+						A2(
+							_elm_lang$core$List$map,
+							_elm_lang$core$Tuple$mapSecond(encoder),
+							doc.meta))
+				},
+				_1: {
+					ctor: '::',
+					_0: primaryDataJson,
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'included',
+							_1: _elm_lang$core$Json_Encode$list(
+								A2(
+									_elm_lang$core$List$map,
+									A2(_bundsol$json_api_plus$JsonApi_Base_Encode$makeObject, encoder, false),
+									includedObjects))
+						},
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$encodePair = F2(
+	function (encoder, _p16) {
+		var _p17 = _p16;
+		return {
+			ctor: '_Tuple2',
+			_0: _p17._0,
+			_1: encoder(_p17._1)
+		};
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$generalPairListEncoder = F2(
+	function (encoder, pairs) {
+		return _elm_lang$core$Json_Encode$object(
+			A2(
+				_elm_lang$core$List$map,
+				_bundsol$json_api_plus$JsonApi_Base_Encode$encodePair(encoder),
+				pairs));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$generalDictionaryEncoder = F2(
+	function (encoder, dict) {
+		return A2(
+			_bundsol$json_api_plus$JsonApi_Base_Encode$generalPairListEncoder,
+			encoder,
+			_elm_lang$core$Dict$toList(dict));
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$putDataIds = F2(
+	function (item, accum) {
+		var _p18 = item.data;
+		_v10_2:
+		do {
+			switch (_p18.ctor) {
+				case 'Id':
+					if (_p18._0.ctor === 'Just') {
+						return {ctor: '::', _0: _p18._0._0, _1: accum};
+					} else {
+						break _v10_2;
+					}
+				case 'Ids':
+					return A2(
+						_elm_lang$core$List$append,
+						accum,
+						_elm_lang$core$Set$toList(_p18._0));
+				default:
+					break _v10_2;
+			}
+		} while(false);
+		return accum;
+	});
+var _bundsol$json_api_plus$JsonApi_Base_Encode$idsFromRelationships = function (obj) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		_bundsol$json_api_plus$JsonApi_Base_Encode$putDataIds,
+		{ctor: '[]'},
+		_elm_lang$core$Dict$values(obj.relationships));
+};
+var _bundsol$json_api_plus$JsonApi_Base_Encode$primaryRelationshipIds = function (doc) {
+	var _p19 = doc.data;
+	switch (_p19.ctor) {
+		case 'Id':
+			return A2(
+				_elm_lang$core$Maybe$withDefault,
+				{ctor: '[]'},
+				A2(
+					_elm_lang$core$Maybe$map,
+					_bundsol$json_api_plus$JsonApi_Base_Encode$idsFromRelationships,
+					A2(
+						_elm_lang$core$Maybe$andThen,
+						A2(_elm_lang$core$Basics$flip, _bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, doc),
+						_p19._0)));
+		case 'Ids':
+			var build = F2(
+				function (item, accum) {
+					var _p20 = A2(_bundsol$json_api_plus$JsonApi_Base_Accessor$getComplement, item, doc);
+					if (_p20.ctor === 'Just') {
+						return A3(
+							_elm_lang$core$Basics$flip,
+							F2(
+								function (x, y) {
+									return {ctor: '::', _0: x, _1: y};
+								}),
+							accum,
+							_bundsol$json_api_plus$JsonApi_Base_Encode$idsFromRelationships(_p20._0));
+					} else {
+						return accum;
+					}
+				});
+			return _elm_lang$core$List$concat(
+				A3(
+					_elm_lang$core$Set$foldl,
+					build,
+					{ctor: '[]'},
+					_p19._0));
+		default:
+			return {ctor: '[]'};
+	}
+};

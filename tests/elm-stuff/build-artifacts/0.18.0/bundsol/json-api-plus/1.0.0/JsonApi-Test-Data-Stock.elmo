@@ -1,0 +1,434 @@
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$maryFranksAtTwin = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('stock')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('1103')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'last_checked',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('2017-11-29')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'price',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(2.9)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'unit',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('ounce')),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'net_weight',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(11.0)),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+											'pack_qty',
+											_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(12)),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'relationships',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+						{
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'establishment',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+									{
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$twinTown),
+										_1: {ctor: '[]'}
+									})),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'choice',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+										{
+											ctor: '::',
+											_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Choice$maryFranks),
+											_1: {ctor: '[]'}
+										})),
+								_1: {ctor: '[]'}
+							}
+						})),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$rumFranksAtTwin = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('stock')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('1034')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'last_checked',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('2018-01-19')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'price',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(2.3)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'unit',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('ounce')),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'net_weight',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(12.0)),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+											'pack_qty',
+											_bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(12)),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'relationships',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+						{
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'establishment',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+									{
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$twinTown),
+										_1: {ctor: '[]'}
+									})),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'choice',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+										{
+											ctor: '::',
+											_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Choice$rumFranks),
+											_1: {ctor: '[]'}
+										})),
+								_1: {ctor: '[]'}
+							}
+						})),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$wittyThighAtTwin = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('stock')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('1033')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'last_checked',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('2018-03-19')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'price',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(1.3)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'unit',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('pound')),
+								_1: {ctor: '[]'}
+							}
+						}
+					})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'relationships',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+						{
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'establishment',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+									{
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$twinTown),
+										_1: {ctor: '[]'}
+									})),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'choice',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+										{
+											ctor: '::',
+											_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Choice$wittyThighs),
+											_1: {ctor: '[]'}
+										})),
+								_1: {ctor: '[]'}
+							}
+						})),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$wittyThighAtFav = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('stock')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('1022')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'last_checked',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('2018-03-12')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'price',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(1.2)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'unit',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('pound')),
+								_1: {ctor: '[]'}
+							}
+						}
+					})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'relationships',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+						{
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'establishment',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+									{
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$favoriteStore),
+										_1: {ctor: '[]'}
+									})),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'choice',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+										{
+											ctor: '::',
+											_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Choice$wittyThighs),
+											_1: {ctor: '[]'}
+										})),
+								_1: {ctor: '[]'}
+							}
+						})),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$horzThighAtFav = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('stock')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('1002')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'last_checked',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('2018-05-05')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'price',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$f(0.99)),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'unit',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('pound')),
+								_1: {ctor: '[]'}
+							}
+						}
+					})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'relationships',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+						{
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'establishment',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+									{
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Establishment$favoriteStore),
+										_1: {ctor: '[]'}
+									})),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'choice',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+										{
+											ctor: '::',
+											_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkage(_bundsol$json_api_plus$JsonApi_Test_Data_Choice$horizonThighs),
+											_1: {ctor: '[]'}
+										})),
+								_1: {ctor: '[]'}
+							}
+						})),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$stocks = {
+	ctor: '::',
+	_0: _bundsol$json_api_plus$JsonApi_Test_Data_Stock$horzThighAtFav,
+	_1: {
+		ctor: '::',
+		_0: _bundsol$json_api_plus$JsonApi_Test_Data_Stock$wittyThighAtTwin,
+		_1: {
+			ctor: '::',
+			_0: _bundsol$json_api_plus$JsonApi_Test_Data_Stock$wittyThighAtFav,
+			_1: {
+				ctor: '::',
+				_0: _bundsol$json_api_plus$JsonApi_Test_Data_Stock$rumFranksAtTwin,
+				_1: {
+					ctor: '::',
+					_0: _bundsol$json_api_plus$JsonApi_Test_Data_Stock$maryFranksAtTwin,
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$stock_ids = A2(
+	_elm_lang$core$List$map,
+	_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o,
+	A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$takeId, _bundsol$json_api_plus$JsonApi_Test_Data_Stock$stocks));
+var _bundsol$json_api_plus$JsonApi_Test_Data_Stock$stock_objects = A2(_elm_lang$core$List$map, _bundsol$json_api_plus$JsonApi_Test_Shortcuts$o, _bundsol$json_api_plus$JsonApi_Test_Data_Stock$stocks);

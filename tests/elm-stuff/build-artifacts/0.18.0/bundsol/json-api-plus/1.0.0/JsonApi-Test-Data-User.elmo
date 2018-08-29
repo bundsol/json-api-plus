@@ -1,0 +1,111 @@
+var _bundsol$json_api_plus$JsonApi_Test_Data_User$dictionary = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'font-color',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('blue')),
+	_1: {ctor: '[]'}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_User$complex = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'display',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+			{
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'allowed',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$l(
+						{
+							ctor: '::',
+							_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(45),
+							_1: {
+								ctor: '::',
+								_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$i(100),
+								_1: {ctor: '[]'}
+							}
+						})),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+						'background-color',
+						_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('grey')),
+					_1: {ctor: '[]'}
+				}
+			})),
+	_1: {ctor: '[]'}
+};
+var _bundsol$json_api_plus$JsonApi_Test_Data_User$sandyMarkinson = {
+	ctor: '::',
+	_0: A2(
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+		'type',
+		_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('user')),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+			'id',
+			_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('2')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+				'attributes',
+				_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+					{
+						ctor: '::',
+						_0: A2(
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+							'first-name',
+							_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Sandy')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'last-name',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$s('Markinson')),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+									'options',
+									_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(_bundsol$json_api_plus$JsonApi_Test_Data_User$complex)),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+										'preferences',
+										_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(_bundsol$json_api_plus$JsonApi_Test_Data_User$dictionary)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+					'relationships',
+					_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+						{
+							ctor: '::',
+							_0: A2(
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts_ops['=>'],
+								'stocks',
+								_bundsol$json_api_plus$JsonApi_Test_Shortcuts$o(
+									{
+										ctor: '::',
+										_0: _bundsol$json_api_plus$JsonApi_Test_Shortcuts$linkages(_bundsol$json_api_plus$JsonApi_Test_Data_Stock$stocks),
+										_1: {ctor: '[]'}
+									})),
+							_1: {ctor: '[]'}
+						})),
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
