@@ -1,35 +1,38 @@
-module JsonApi.Test.Data.Want exposing (..)
+module JsonApi.Test.Data.Want exposing (turkeyFranksWant, want_ids, want_objects, wants)
 
-import JsonApi.Test.Shortcuts exposing (..)
 import JsonApi.Test.Data.Product exposing (..)
+import JsonApi.Test.Shortcuts exposing (..)
 
-turkeyFranksWant = 
-  [ "type" => s "want"
-  , "id" => s "311"
-  , "attributes" => o
-    [ "priority" => i 4     
+
+turkeyFranksWant =
+    [ p "type" ( s "want")
+    , p "id" ( s "311")
+    , p "attributes"
+        ( o
+            [ p "priority" ( i 4)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "product"
+                ( o
+                    [ linkage turkeyFranks
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "product" => o
-      [ linkage turkeyFranks
-      ]    
+
+
+wants =
+    [ turkeyFranksWant
     ]
-  ]
 
 
-
-
-
-
-wants = 
-  [ turkeyFranksWant  
-  ]
-  
-  
 want_ids =
-  List.map takeId wants
-  |> List.map o
-  
-  
+    List.map takeId wants
+        |> List.map o
+
+
 want_objects =
-  List.map o wants
+    List.map o wants

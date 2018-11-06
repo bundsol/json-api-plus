@@ -77,18 +77,18 @@ tradePlaces name =
         traded = 
           trade (Local "age") (Outbound "hobby") g          
         result = 
-          ( getLocalString "hobby" traded
-          , getInt "age" traded
-          , getProperty "hobby"traded
-          , getLocal "age" traded
-          )
+          { f1=getLocalString "hobby" traded
+          , f2=getInt "age" traded
+          , f3=getProperty "hobby"traded
+          , f4=getLocal "age" traded
+          }
       in 
         Expect.equal result
-          ( Just "Play guitar"
-          , Just 30
-          , Nothing
-          , Nothing
-          )
+          { f1=Just "Play guitar"
+          , f2=Just 30
+          , f3=Nothing
+          , f4=Nothing
+          }
 
 copyValues name =
   test name <|

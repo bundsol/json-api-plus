@@ -1,71 +1,84 @@
-module JsonApi.Test.Data.Brand exposing (..)
+module JsonApi.Test.Data.Brand exposing (brand_ids, brand_objects, brands, horizon, maryO, newComer, rumT, wittyChicken)
 
 import JsonApi.Test.Shortcuts exposing (..)
 
-horizon = 
-  [ "type" => s "brand"
-  , "id" => s "21"
-  , "attributes" => o
-    [ "name" => s "Horizon" 
-    , "opinion" => s "Not my first choice"
+
+horizon =
+    [ p "type" ( s "brand")
+    , p "id" ( s "21")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "Horizon")
+            , p "opinion" ( s "Not my first choice")
+            ]
+        )
     ]
-  ]
 
 
-wittyChicken = 
-  [ "type" => s "brand"
-  , "id" => s "12"
-  , "attributes" => o
-    [ "name" => s "Witty Chicken"
-    , "opinion" => s "Another kind of freshness"
+wittyChicken =
+    [ p "type" ( s "brand")
+    , p "id" ( s "12")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "Witty Chicken")
+            , p "opinion" ( s "Another kind of freshness")
+            ]
+        )
     ]
-  ] 
 
 
-maryO = 
-  [ "type" => s "brand"
-  , "id" => s "8"
-  , "attributes" => o
-    [ "name" => s "Mary-O"
-    , "opinion" => s "Turkey specialist, not expensive"
+maryO =
+    [ p "type" ( s "brand")
+    , p "id" ( s "8")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "Mary-O")
+            , p "opinion" ( s "Turkey specialist, not expensive")
+            ]
+        )
     ]
-  ]
 
-rumT = 
-  [ "type" => s "brand"
-  , "id" => s "13"
-  , "attributes" => o
-    [ "name" => s "Rum-T"
-    , "opinion" => s "Affordable, yet good"
+
+rumT =
+    [ p "type" ( s "brand")
+    , p "id" ( s "13")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "Rum-T")
+            , p "opinion" ( s "Affordable, yet good")
+            ]
+        )
     ]
-  ]
-  
-  
-newComer = 
-  [ "type" => s "brand"
-  , "attributes" => o
-    [ "name" => s "New Comer"
-    , "opinion" => s "Very Competitive"
+
+
+newComer =
+    [ p "type" ( s "brand")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "New Comer")
+            , p "opinion" ( s "Very Competitive")
+            ]
+        )
+    , p "meta"
+        ( o
+            [ p "new-resource-tag" ( s "AAAABBBB")
+            ]
+        )
     ]
-  , "meta" => o
-    [ "new-resource-tag" => s "AAAABBBB"
+
+
+brands =
+    [ horizon
+    , wittyChicken
+    , rumT
+    , maryO
     ]
-  ]  
 
 
-
-brands = 
-  [ horizon
-  , wittyChicken
-  , rumT
-  , maryO
-  ]
-  
-  
 brand_ids =
-  List.map takeId brands
-  |> List.map o
-  
-  
+    List.map takeId brands
+        |> List.map o
+
+
 brand_objects =
-  List.map o brands
+    List.map o brands

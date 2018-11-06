@@ -1,42 +1,57 @@
-module JsonApi.Base.Modifier exposing 
-  ( modifyAttributes
-  , modifyLocal
-  , trade
-  , modifyRelationships
-  , renameRelationship
-  , swapData
-  , setRelationLocality
-  , setDocMeta
-  , unrelate
-  , insertTagIfType
-  , setMethod
-  , setData
-  , filterDocMeta
-  , clearDocMeta
-  )
+module JsonApi.Base.Modifier exposing
+    ( clearDocMeta
+    , filterDocMeta
+    , insertTagIfType
+    , modifyAttributes
+    , modifyLocal
+    , modifyRelationships
+    , renameRelationship
+    , setData
+    , setDocMeta
+    , setMethod
+    , setRelationLocality
+    , swapData
+    , trade
+    , unrelate
+    )
 
-
-import JsonApi.Base.Definition exposing 
-  ( IDKey, Data(..), WithData
-  , ComplementModifier, ComplementDictionaryModifier
-  , GeneralDictionaryModifier
-  , RelationshipModifier, RelationshipsModifier
-  , Document
-  )
-import JsonApi.Base.Accessor exposing
-  ( isNew
-  , claimersOf
-  )
-import JsonApi.Base.Utility exposing
-  ( findSpot, dropSecond
-  )
-import Tuple exposing (first,second,mapFirst)
 import Dict
+import JsonApi.Base.Accessor
+    exposing
+        ( claimersOf
+        , isNew
+        )
+import JsonApi.Base.Definition
+    exposing
+        ( ComplementDictionaryModifier
+        , ComplementModifier
+        , Data(..)
+        , Document
+        , GeneralDictionaryModifier
+        , IDKey
+        , RelationshipModifier
+        , RelationshipsModifier
+        , WithData
+        )
+import JsonApi.Base.Utility
+    exposing
+        ( dropSecond
+        , findSpot
+        )
+import List
+    exposing
+        ( append
+        , filter
+        , head
+        , isEmpty
+        , map
+        , member
+        , partition
+        )
 import Set
-import List exposing
-  ( isEmpty,filter,append,partition,map
-  , member,head
-  )
+import Tuple exposing (first, mapFirst, second)
+
+
 
 
 
@@ -175,7 +190,7 @@ renameRelationship idKey field newName doc =
   Dict.toList 
   >> partition ((==) field << first)
   >> mapFirst (map (mapFirst (always newName)))
-  >> uncurry append 
+  >> ( \(a,b) -> append a b )
   >> Dict.fromList
   |> modifyRelationships idKey 
   |> (|>) doc
@@ -186,7 +201,7 @@ swapData idKey one two doc =
   let 
     groups rels = 
       Dict.toList rels
-      |> partition ((flip member) [one,two] << first)
+      |> partition ((|>) [one,two] << member << first)
     relationshipsModifier rels = 
       case groups rels of 
         ([(name1, r1), (name2, r2)], rest) ->
@@ -220,13 +235,13 @@ trade idKey local outbound doc =
       |> mapFirst (head << Dict.toList) 
     modifier c = 
       case (getPair local c.local, getPair outbound c.attributes) of 
-        ( (Just(localKey, localValue), localRest)
-        , (Just(outboundKey, outboundValue), outboundRest)
-        )           -> 
-          { c 
-          | attributes = Dict.insert localKey localValue outboundRest
-          , local = Dict.insert outboundKey outboundValue localRest
-          }
+        ( (Just(localKey, localValue), localRest)        ,
+          (Just(outboundKey, outboundValue), outboundRest)   )           
+          -> 
+            { c 
+            | attributes = Dict.insert localKey localValue outboundRest
+            , local = Dict.insert outboundKey outboundValue localRest
+            }
         _ -> c 
   in 
     modifyComplement idKey modifier doc 

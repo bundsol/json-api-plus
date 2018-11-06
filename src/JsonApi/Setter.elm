@@ -1,61 +1,72 @@
 module JsonApi.Setter exposing
-  ( setString, setInt, setFloat, setBool
-  , setLocalString, setLocalBool, setLocalInt, setLocalFloat
-  , setSubfield, setProperties, setProperty, setLocal, setLocals
-  , Varname(..), swap, trade, copy, promote, remove, move
-  )
-  
-  
-{-| Functions to set values of resources attributes  
+    ( Varname(..)
+    , setString, setInt, setFloat, setBool
+    , setProperty, setSubfield, setLocal, setProperties, setLocals
+    , setLocalString, setLocalInt, setLocalFloat, setLocalBool
+    , copy, move, promote, remove, swap, trade
+    )
+
+{-| Functions to set values of resources attributes
 
 
 ## Types
+
 @docs Varname
 
+
 ## Primitives
+
 @docs setString, setInt, setFloat, setBool
 
 
 ## Composite values
+
 @docs setProperty, setSubfield, setLocal, setProperties, setLocals
 
 
 ## Local values
+
+
 ### Set values that are only used at client side.
+
 @docs setLocalString, setLocalInt, setLocalFloat, setLocalBool
 
+
 ## Moving data
+
 @docs copy, move, promote, remove, swap, trade
 
-
 -}
-  
 
-
-
-import JsonApi.Base.Definition exposing 
-  ( GeneralPairList
-  )
-import JsonApi exposing(Guide)
-import JsonApi.Base.Guide as Guide exposing
-  ( updateDoc
-  , setDoc
-  )
-import JsonApi.Getter exposing
-  ( getProperty
-  , getLocal
-  )
-import JsonApi.TopLevel  as TopLevel
 import Boxed exposing (..)
-import JsonApi.Base.Core as Core exposing 
-  ( modifyAttributes
-  , modifyLocal
-  )
-import JsonApi.Base.Utility exposing
-  ( dropSecond
-  )
-import Dict
 import Boxed.Dictionary
+import Dict
+import JsonApi exposing (Guide)
+import JsonApi.Base.Core as Core
+    exposing
+        ( modifyAttributes
+        , modifyLocal
+        )
+import JsonApi.Base.Definition
+    exposing
+        ( GeneralPairList
+        )
+import JsonApi.Base.Guide as Guide
+    exposing
+        ( setDoc
+        , updateDoc
+        )
+import JsonApi.Base.Utility
+    exposing
+        ( dropSecond
+        )
+import JsonApi.Getter
+    exposing
+        ( getLocal
+        , getProperty
+        )
+import JsonApi.TopLevel as TopLevel
+
 
 
 
@@ -121,7 +132,7 @@ setSubfield  property subfield value g =
       Dict.update property (Maybe.map boxer) attributes
   in 
     modifyAttributes g.idr modifier g.doc
-    |> (flip updateDoc) g
+    |> setDoc g
 
 
 
@@ -177,23 +188,32 @@ type Varname = Local String | Outbound String
 swap : Varname -> Varname -> Guide.Guide g a -> Guide.Guide g a 
 swap vn1 vn2 g = 
   let 
+  
     interSwap local outbound = 
       case (getLocal local g, getProperty outbound g) of 
+      
         (Just localValue, Just outboundValue) -> 
           setLocal local outboundValue g 
           |> setProperty outbound localValue
+          
         _ -> g
+        
     intraSwap field1 field2 getter setter = 
       case (getter field1 g, getter field2 g) of 
+      
         (Just value1, Just value2) -> 
           setter field1 value2 g 
           |> setter field2 value1
+          
         _ -> g
   in 
     case (vn1, vn2) of 
       (Local local, Outbound outbound) -> interSwap local outbound
+      
       (Outbound outbound, Local local) -> interSwap local outbound
+      
       (Local field1, Local field2) -> intraSwap field1 field2 getLocal setLocal
+      
       (Outbound field1, Outbound field2) -> 
         intraSwap field1 field2 getProperty setProperty
       
@@ -204,13 +224,17 @@ swap vn1 vn2 g =
 trade : Varname -> Varname -> Guide.Guide g a -> Guide.Guide g a 
 trade vn1 vn2 g = 
   let 
+  
     interTrade local outbound =
       Core.trade g.idr local outbound g.doc
       |> setDoc g
+      
   in 
     case (vn1, vn2) of 
       (Local local, Outbound outbound) -> interTrade local outbound
+      
       (Outbound outbound, Local local) -> interTrade local outbound
+      
       _ -> swap vn1 vn2 g
 
         
@@ -220,19 +244,25 @@ trade vn1 vn2 g =
 copy : Varname -> Varname -> Guide.Guide g a -> Guide.Guide g a 
 copy vn1 vn2 g = 
   let 
+  
     copier source target getter setter =
       case getter source g of 
+      
         Just something ->
           setter target something g 
+          
         _ -> g 
   in 
     case (vn1, vn2) of 
       (Local local, Outbound outbound) -> 
         copier local outbound getLocal setProperty
+        
       (Outbound outbound, Local local) -> 
         copier outbound local getProperty setLocal
+        
       (Local field1, Local field2) -> 
         copier field1 field2 getLocal setLocal
+        
       (Outbound field1, Outbound field2) -> 
         copier field1 field2 getProperty setProperty
         
@@ -244,16 +274,20 @@ overwrite if a variable with same name already exists at destination.
 move : Varname -> Guide.Guide g a -> Guide.Guide g a 
 move varname g = 
   let 
+  
     mover field getter setter =
       case getter field g of 
+      
         Just something ->
           remove varname g 
           |> setter field something
+          
         _ -> g 
   in           
     case varname of 
       Local local -> 
         mover local getLocal setProperty
+        
       Outbound outbound -> 
         mover outbound getProperty setLocal
       
@@ -269,6 +303,7 @@ promote field g =
   case getLocal field g of 
     Just something -> 
       setProperty field something g
+      
     _ -> g
     
     
@@ -277,13 +312,13 @@ promote field g =
 -}    
 remove : Varname -> Guide.Guide g a -> Guide.Guide g a 
 remove varname g =
+
   case varname of 
     Local local -> 
       modifyLocal g.idr (Dict.remove local) g.doc
       |> setDoc g 
+      
     Outbound outbound ->
       modifyAttributes g.idr (Dict.remove outbound) g.doc
       |> setDoc g 
     
-      
-  

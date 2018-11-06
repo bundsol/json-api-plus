@@ -1,122 +1,162 @@
-module JsonApi.Test.Data.Stock exposing (..)
+module JsonApi.Test.Data.Stock exposing (horzThighAtFav, maryFranksAtTwin, rumFranksAtTwin, stock_ids, stock_objects, stocks, wittyThighAtFav, wittyThighAtTwin)
 
+import JsonApi.Test.Data.Choice exposing (..)
+import JsonApi.Test.Data.Establishment exposing (..)
 import JsonApi.Test.Shortcuts exposing (..)
 
 
-import JsonApi.Test.Data.Establishment exposing (..)
-import JsonApi.Test.Data.Choice exposing (..)
-
-
 horzThighAtFav =
-  [ "type" => s "stock"
-  , "id" => s "1002"
-  , "attributes" => o
-    [ "last_checked" => s "2018-05-05"
-    , "price" => f 0.99
-    , "unit" => s "pound"
+    [ p "type" ( s "stock")
+    , p "id" ( s "1002")
+    , p "attributes"
+        ( o
+            [ p "last_checked" ( s "2018-05-05")
+            , p "price" ( f 0.99)
+            , p "unit" ( s "pound")
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "establishment"
+                ( o
+                    [ linkage favoriteStore
+                    ]
+                )
+            , p "choice"
+                ( o
+                    [ linkage horizonThighs
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "establishment" => o
-      [ linkage favoriteStore
-      ]
-    , "choice" => o 
-      [ linkage horizonThighs
-      ]
-    ]
-  ]
+
 
 wittyThighAtFav =
-  [ "type" => s "stock"
-  , "id" => s "1022"
-  , "attributes" => o
-    [ "last_checked" => s "2018-03-12"
-    , "price" => f 1.20
-    , "unit" => s "pound"    
+    [ p "type" ( s "stock")
+    , p "id" ( s "1022")
+    , p "attributes"
+        ( o
+            [ p "last_checked" ( s "2018-03-12")
+            , p "price" ( f 1.2)
+            , p "unit" ( s "pound")
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "establishment"
+                ( o
+                    [ linkage favoriteStore
+                    ]
+                )
+            , p "choice"
+                ( o
+                    [ linkage wittyThighs
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "establishment" => o
-      [ linkage favoriteStore
-      ]
-    , "choice" => o 
-      [ linkage wittyThighs
-      ]
-    ]
-  ]  
 
 
-wittyThighAtTwin = 
-  [ "type" => s "stock"
-  , "id" => s "1033"
-  , "attributes" => o
-    [ "last_checked" => s "2018-03-19"
-    , "price" => f 1.30
-    , "unit" => s "pound"    
+wittyThighAtTwin =
+    [ p "type" ( s "stock")
+    , p "id" ( s "1033")
+    , p "attributes"
+        ( o
+            [ p "last_checked" ( s "2018-03-19")
+            , p "price" ( f 1.3)
+            , p "unit" ( s "pound")
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "establishment"
+                ( o
+                    [ linkage twinTown
+                    ]
+                )
+            , p "choice"
+                ( o
+                    [ linkage wittyThighs
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "establishment" => o
-      [ linkage twinTown
-      ]
-    , "choice" => o 
-      [ linkage wittyThighs
-      ]
-    ]
-  ]  
-   
+
 
 rumFranksAtTwin =
-  [ "type" => s "stock"
-  , "id" => s "1034"
-  , "attributes" => o
-    [ "last_checked" => s "2018-01-19"
-    , "price" => f 2.30
-    , "unit" => s "ounce"  
-    , "net_weight" => f 12.0
-    , "pack_qty" => i 12
+    [ p "type" ( s "stock")
+    , p "id" ( s "1034")
+    , p "attributes"
+        ( o
+            [ p "last_checked" ( s "2018-01-19")
+            , p "price" ( f 2.3)
+            , p "unit" ( s "ounce")
+            , p "net_weight" ( f 12.0)
+            , p "pack_qty" ( i 12)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "establishment"
+                ( o
+                    [ linkage twinTown
+                    ]
+                )
+            , p "choice"
+                ( o
+                    [ linkage rumFranks
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "establishment" => o
-      [ linkage twinTown
-      ]
-    , "choice" => o 
-      [ linkage rumFranks
-      ]
-    ]
-  ]  
-   
+
 
 maryFranksAtTwin =
-  [ "type" => s "stock"
-  , "id" => s "1103"
-  , "attributes" => o
-    [ "last_checked" => s "2017-11-29"
-    , "price" => f 2.90
-    , "unit" => s "ounce"  
-    , "net_weight" => f 11.0
-    , "pack_qty" => i 12
+    [ p "type" ( s "stock")
+    , p "id" ( s "1103")
+    , p "attributes"
+        ( o
+            [ p "last_checked" ( s "2017-11-29")
+            , p "price" ( f 2.9)
+            , p "unit" ( s "ounce")
+            , p "net_weight" ( f 11.0)
+            , p "pack_qty" ( i 12)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "establishment"
+                ( o
+                    [ linkage twinTown
+                    ]
+                )
+            , p "choice"
+                ( o
+                    [ linkage maryFranks
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "establishment" => o
-      [ linkage twinTown
-      ]
-    , "choice" => o 
-      [ linkage maryFranks
-      ]
-    ]
-  ]  
 
 
-stocks = 
-  [ horzThighAtFav
-  , wittyThighAtTwin
-  , wittyThighAtFav
-  , rumFranksAtTwin
-  , maryFranksAtTwin
-  ]
-  
-stock_ids = 
-  List.map takeId stocks
-  |> List.map o
-  
-  
-stock_objects = 
-  List.map o stocks
+stocks =
+    [ horzThighAtFav
+    , wittyThighAtTwin
+    , wittyThighAtFav
+    , rumFranksAtTwin
+    , maryFranksAtTwin
+    ]
+
+
+stock_ids =
+    List.map takeId stocks
+        |> List.map o
+
+
+stock_objects =
+    List.map o stocks

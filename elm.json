@@ -1,0 +1,28 @@
+{
+    "type": "package",
+    "name": "bundsol/json-api-plus",
+    "summary": "Json Api implementation, with non-standard additions",
+    "license": "BSD-3-Clause",
+    "version": "1.0.0",
+    "exposed-modules": [
+        "JsonApi",
+        "JsonApi.Getter",
+        "JsonApi.Relationship",
+        "JsonApi.Setter",
+        "JsonApi.TopLevel"
+    ] ,
+    "source-directories": [
+        "src"
+    ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "bundsol/boxed": "2.0.0 <= v < 3.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/http": "1.0.0 <= v < 2.0.0"
+    } ,
+    "test-dependencies": {
+      "elm-explorations/test": "1.1.0 <= v < 2.0.0" ,
+      "elm/random": "1.0.0 <= v < 2.0.0"
+    }
+}

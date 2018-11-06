@@ -1,31 +1,48 @@
 module JsonApi.Base.Encode exposing (documentEncoder)
 
-
-import JsonApi.Base.Definition  exposing 
-  ( IDKey, Data(..), Complement,  Document
-  , GeneralDictionary, GeneralPairList
-  , Relationship
-  , Entry, Encoder
-  )
-import JsonApi.Base.Accessor exposing
-  ( getComplement
-  , withDataToKeyList
-  , nonLocalRelationshipsIds
-  , isNew
-  )
-  
-import JsonApi.Base.Utility   exposing
-  ( dropSecond
-  )
-
-import Json.Encode as Encode exposing (list, object, Value,
-  string, null, list, bool, int)
-  
-import List exposing (map, foldl, append , filter, concat, isEmpty, singleton)
 import Dict
-import Set exposing (Set)
-import Tuple exposing (second, mapSecond)
+import Json.Encode as Encode
+    exposing
+        ( Value
+        , bool
+        , int
+        , list
+        , null
+        , object
+        , string
+        )
+import JsonApi.Base.Accessor
+    exposing
+        ( getComplement
+        , isNew
+        , nonLocalRelationshipsIds
+        , withDataToKeyList
+        )
+import JsonApi.Base.Definition
+    exposing
+        ( Complement
+        , Data(..)
+        , Document
+        , Encoder
+        , Entry
+        , GeneralDictionary
+        , GeneralPairList
+        , IDKey
+        , Relationship
+        )
+import JsonApi.Base.Utility
+    exposing
+        ( dropSecond
+        )
+import List exposing (append, concat, filter, foldl, isEmpty, map, singleton)
 import Maybe exposing (andThen, withDefault)
+import Set exposing (Set)
+import Tuple exposing
+  ( mapSecond
+  , second
+  , pair
+  )
+import String exposing (fromInt)
 
 
 
@@ -57,7 +74,7 @@ primaryRelationshipIds  doc =
   case  doc.data of 
     Id maybeId  -> 
       maybeId
-      |> andThen ((flip) getComplement doc) 
+      |> andThen ((|>) doc << getComplement) 
       |> Maybe.map idsFromRelationships 
       |> withDefault []
     Ids list ->
@@ -66,7 +83,7 @@ primaryRelationshipIds  doc =
           case getComplement item doc of 
             Just obj -> 
               idsFromRelationships  obj 
-              |> (flip (::)) accum
+              |> (|>) accum << (::)
             _ -> accum
       in 
         Set.foldl build [] list
@@ -101,32 +118,32 @@ encodeRelationship  (fieldName, {data}) =
   ( case data of 
     Ids keySet ->
       Set.toList keySet
-      |> map (object << (makeLinkage False))
-      |> list 
+      |> list (object << (makeLinkage Included))
     Id (Just idKey) ->          
-      makeLinkage False idKey
+      makeLinkage Included idKey
       |> object
     _ -> null
   ) 
-  |> (,) "data"
+  |> pair "data"
   |> singleton
   |> object
-  |> (,) fieldName
+  |> pair fieldName
 
 
+type DataLocation = Primary | Included
 
 
-makeLinkage : Bool -> IDKey -> List (String , Value)
-makeLinkage isPrimary ((type_, id, tag) as idKey) =  
+makeLinkage : DataLocation -> IDKey -> List (String , Value)
+makeLinkage location ((type_, id, tag) as idKey) =  
   let
     idInfo =
-      case (isPrimary, isNew idKey) of
-        (True, True) -> 
+      case (location, isNew idKey) of
+        (Primary, True) -> 
           []
           
-        (False, True)  -> 
+        (Included, True)  -> 
           [ ( "meta", object 
-              [ ("new-resource-tag", string (toString tag))
+              [ ("new-resource-tag", string (fromInt tag))
               ]
             )
           ]   
@@ -144,8 +161,8 @@ makeLinkage isPrimary ((type_, id, tag) as idKey) =
 
 
 
-makeObject : Encoder a -> Bool -> Entry a  -> Value 
-makeObject encoder isPrimary (idKey, obj) =
+makeObject : Encoder a -> DataLocation -> Entry a  -> Value 
+makeObject encoder location (idKey, obj) =
   let    
     attributes = 
       Dict.toList obj.attributes      
@@ -156,7 +173,7 @@ makeObject encoder isPrimary (idKey, obj) =
       |> map encodeRelationship
   in
     append 
-      (makeLinkage isPrimary idKey)    
+      (makeLinkage location idKey)    
       [ ("attributes", object attributes)
       , ("relationships", object relationships)
       ]
@@ -176,7 +193,7 @@ documentEncoder encoder  doc =
           newKeyList =
             map (nonLocalRelationshipsIds doc) keyList
             |> concat
-            |> filter (((flip Set.member) visitedSet) >> not)
+            |> filter ( ((|>) visitedSet << Set.member)  >> not )
           newVisitedSet = 
             Set.union visitedSet (Set.fromList newKeyList)
         in 
@@ -187,7 +204,7 @@ documentEncoder encoder  doc =
       Set.fromList primaryIds
     includedIdSet = 
       repeat primaryIds primarySet
-      |> Set.filter (not << ((flip Set.member) primarySet)) 
+      |> Set.filter ( ((|>) primarySet << Set.member)  >> not )
     primaryDataObjects = 
       Dict.filter (\ k v -> Set.member k primarySet ) doc.included
       |> Dict.toList
@@ -197,16 +214,16 @@ documentEncoder encoder  doc =
     primaryDataJson = 
       ( case (doc.data, primaryDataObjects) of 
         (Ids _,_) ->
-          list (map (makeObject encoder True) primaryDataObjects)
+          list  (makeObject encoder Primary) primaryDataObjects
         (Id (Just _), [dataObject]) ->          
-          makeObject encoder True dataObject
+          makeObject encoder Primary dataObject
         _ -> null
-      ) |> (,) "data"
+      ) |> pair "data"
   in 
     Encode.object 
     [ ("meta", object (map (mapSecond encoder) doc.meta))
     , primaryDataJson
-    , ("included", list (map (makeObject encoder False) includedObjects) )
+    , ("included", list  (makeObject encoder Included) includedObjects) 
     ]
 
 

@@ -1,42 +1,54 @@
 module JsonApi.Base.Accessor exposing
-  ( getComplement
-  , getRelationshipLinks
-  , getRelationshipMeta
-  , idKeyFromData
-  , isInData
-  , idKeysFromData
-  , withDataToKeyList
-  , isNew
-  , track
-  , claimersOf
-  , getDocMeta
-  , nonLocalRelationshipsIds 
-  , getRelationLocality
-  , getAttributes
-  , getLocal
-  , getObject
-  , getResource
-  , reach, reachMany
-  , getLinks
-  )
+    ( claimersOf
+    , getAttributes
+    , getComplement
+    , getDocMeta
+    , getLinks
+    , getLocal
+    , getObject
+    , getRelationLocality
+    , getRelationshipLinks
+    , getRelationshipMeta
+    , getResource
+    , idKeyFromData
+    , idKeysFromData
+    , isInData
+    , isNew
+    , nonLocalRelationshipsIds
+    , reach
+    , reachMany
+    , track
+    , withDataToKeyList
+    )
 
-import JsonApi.Base.Definition as Definition exposing
-  ( IDKey, Document, WithData, Data(..)
-  , Object
-  , Resource, Complement
-  , Relationship, Relationships
-  , GeneralDictionary
-  , GeneralPairList
+import Dict
+import JsonApi.Base.Definition as Definition
+    exposing
+        ( Complement
+        , Data(..)
+        , Document
+        , GeneralDictionary
+        , GeneralPairList
+        , IDKey
+        , Object
+        , Relationship
+        , Relationships
+        , Resource
+        , WithData
+        )
+import JsonApi.Base.Utility exposing (find)
+import List exposing
+  ( any
+  , concat
+  , filter
+  , filterMap
+  , foldl
+  , map
+  , singleton
   )
-  
-import JsonApi.Base.Utility  exposing (find)
-
-import Tuple exposing (first, second)
-import Dict 
 import Maybe exposing (andThen, withDefault)
-import Set 
-import List exposing(singleton, any, foldl, concat,map,filterMap,filter)
-
+import Set
+import Tuple exposing (first, second)
 
 
 
@@ -125,8 +137,10 @@ isNew (_,_,newTag) = newTag > 0
 isInData : IDKey -> WithData a -> Bool
 isInData id {data} =
   case data of 
+  
     Ids keySet -> 
       Set.member id keySet
+      
     Id (Just idKey) -> 
       idKey == id
     _ -> False
@@ -183,17 +197,21 @@ nonLocalRelationshipsIds doc idKey  =
 reach : IDKey -> List String ->  Document  a -> Maybe IDKey
 reach  idKey fields doc  =
   let 
+  
     advance h key =
       getRelationship key h doc 
       |> andThen idKeyFromData
+      
     repeat pair =
       case pair of 
+      
         (_,Nothing)  ->  Nothing
+        
         ([], _)     ->   Nothing
-        ([last], Just key) -> 
-          advance last key
-        (h::t, Just key) ->
-          repeat (t, advance h key)
+        
+        ([last], Just key) ->   advance last key
+          
+        (h::t, Just key) ->    repeat (t, advance h key)
   in 
     repeat (fields, Just idKey)
     
@@ -204,27 +222,37 @@ reach  idKey fields doc  =
 reachMany : IDKey -> List String ->  Document  a -> List IDKey
 reachMany idKey fields doc =
   let 
+  
     advance h key =
       getRelationship key h doc 
       |> andThen idKeyFromData
+      
     repeat pair =
+    
       case pair of 
         (_,Nothing)  ->  []
+        
         ([], _)     ->   []
+        
         ([penul,last] , Just key) ->
+        
           case getRelationship key  penul doc of 
             Nothing -> []
+            
             Just rel -> 
+            
               case (idKeyFromData rel, idKeysFromData rel) of 
-                (Nothing, []) -> []
-                (Just one, _) -> 
-                  repeat ([last], Just one)
-                (_, many) -> 
-                  filterMap (advance last) many
+                (Nothing, []) ->  []
+                
+                (Just one, _) ->  repeat ([last], Just one)
+                  
+                (_, many) ->      filterMap (advance last) many
+                  
         ([last], Just key) -> 
           getRelationship key last doc
           |> Maybe.map idKeysFromData
           |> withDefault []
+          
         (h::t, Just key) ->
           repeat (t, advance h key)
   in 
@@ -235,30 +263,46 @@ reachMany idKey fields doc =
 track : IDKey -> List String -> IDKey -> Document  a -> Maybe IDKey
 track idKey fields subject doc =
   let 
+  
     advance h key =
       getRelationship key h doc 
       |> andThen idKeyFromData
+      
     repeat pair =
       case pair of 
         (_,Nothing)  ->  Nothing
+        
         ([], _)     ->   Nothing
+        
         ([penul,last] , Just key) ->
+        
           case getRelationship key  penul doc of 
             Nothing -> Nothing
+            
             Just rel -> 
+            
               case (idKeyFromData rel, idKeysFromData rel) of 
                 (Nothing, []) -> Nothing
-                (Just one, _) -> 
-                  repeat ([last], Just one)
+                
+                (Just one, _) -> repeat ([last], Just one)
+                  
                 (_, many) -> 
                   filterMap (advance last) many
                   |> find ((==) subject)
+                  
         ([last], Just key) -> 
-          ( case getRelationship key last doc |> Maybe.map .data of 
+        
+          ( case getRelationship key last doc 
+                 |> Maybe.map .data            of 
+                 
             Just(Ids ids) -> Set.toList ids
+            
             Just(Id (Just id)) -> singleton id
+            
             _ -> []
+            
           )|> find ((==) subject) 
+          
         (h::t, Just key) ->
           repeat (t, advance h key)
   in 

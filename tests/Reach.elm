@@ -151,7 +151,7 @@ expectRetrieved  r g  =
           r.getter fields r.propertyName g
      in
        Expect.equal 
-         (r.value,        r.defaultValue,    Just r.value,  True) 
-         (goodRetrieval,  defaultRetrieval,  retrieved,     exists)
+         {f1=r.value,        f2=r.defaultValue,    f3=Just r.value, f4= True}
+         {f1=goodRetrieval, f2= defaultRetrieval,  f3=retrieved,    f4= exists}
        
        

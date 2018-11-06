@@ -1,108 +1,151 @@
-module JsonApi.Test.Data.Choice exposing (..)
-
-import JsonApi.Test.Shortcuts exposing (..)
+module JsonApi.Test.Data.Choice exposing (choice_ids, choice_objects, choices, horizonThighs, maryFranks, newComerFranks, rumFranks, wittyThighs)
 
 import JsonApi.Test.Data.Brand exposing (..)
 import JsonApi.Test.Data.Product exposing (..)
+import JsonApi.Test.Shortcuts exposing (..)
 
 
 horizonThighs =
-  [ "type" => s "choice"
-  , "id" => s "55"
-  , "attributes" => o
-    [ "quality" => i 1
+    [ p "type" ( s "choice")
+    , p "id" ( s "55")
+    , p "attributes"
+        ( o
+            [ p "quality" ( i 1)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "product"
+                ( o
+                    [ linkage chickenThighs
+                    ]
+                )
+            , p "brand"
+                ( o
+                    [ linkage horizon
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "product" => o
-      [ linkage chickenThighs
-      ]
-    , "brand" => o 
-      [ linkage horizon
-      ]
-    ]
-  ]
 
 
-wittyThighs = 
-  [ "type" => s "choice"
-  , "id" => s "56"
-  , "attributes" => o
-    [ "quality" => i 4
+wittyThighs =
+    [ p "type" ( s "choice")
+    , p "id" ( s "56")
+    , p "attributes"
+        ( o
+            [ p "quality" ( i 4)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "product"
+                ( o
+                    [ linkage chickenThighs
+                    ]
+                )
+            , p "brand"
+                ( o
+                    [ linkage wittyChicken
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "product" => o
-      [ linkage chickenThighs
-      ]
-    , "brand" => o
-      [ linkage wittyChicken
-      ]
-    ]
-  ]
 
 
-maryFranks = 
-  [ "type" => s "choice"
-  , "id" => s "57"
-  , "attributes" => o
-    [ "quality" => i 3
+maryFranks =
+    [ p "type" ( s "choice")
+    , p "id" ( s "57")
+    , p "attributes"
+        ( o
+            [ p "quality" ( i 3)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "product"
+                ( o
+                    [ linkage turkeyFranks
+                    ]
+                )
+            , p "brand"
+                ( o
+                    [ linkage maryO
+                    ]
+                )
+            ]
+        )
     ]
-  , "relationships" => o
-    [ "product" => o
-      [ linkage turkeyFranks
-      ]
-    , "brand" => o
-      [ linkage maryO
-      ]
-    ]
-  ]
-
-rumFranks = 
-  [ "type" => s "choice"
-  , "id" => s "58"
-  , "attributes" => o
-    [ "quality" => i 3
-    ]
-  , "relationships" => o
-    [ "product" => o
-      [ linkage turkeyFranks
-      ]
-    , "brand" => o
-      [ linkage rumT
-      ]
-    ]
-  ]
-  
-  
-newComerFranks = 
-  [ "type" => s "choice"
-  , "attributes" => o
-    [ "quality" => i 3
-    ]
-  , "relationships" => o
-    [ "product" => o
-      [ linkage turkeyFranks
-      ]
-    , "brand" => o
-      [ linkage newComer
-      ]
-    ]
-  , "meta" => o
-    [ "new-resource-tag" => s "NCFRANKSXXXYYYYY"
-    ]    
-  ]  
 
 
-choices = 
-  [ horizonThighs
-  , wittyThighs
-  , maryFranks
-  , rumFranks
-  ]
-  
-choice_ids = 
-  List.map takeId choices
-  |> List.map o
-  
-  
-choice_objects = 
-  List.map o choices
+rumFranks =
+    [ p "type" ( s "choice")
+    , p "id" ( s "58")
+    , p "attributes"
+        ( o
+            [ p "quality" ( i 3)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "product"
+                ( o
+                    [ linkage turkeyFranks
+                    ]
+                )
+            , p "brand"
+                ( o
+                    [ linkage rumT
+                    ]
+                )
+            ]
+        )
+    ]
+
+
+newComerFranks =
+    [ p "type" ( s "choice")
+    , p "attributes"
+        ( o
+            [ p "quality" ( i 3)
+            ]
+        )
+    , p "relationships"
+        ( o
+            [ p "product"
+                ( o
+                    [ linkage turkeyFranks
+                    ]
+                )
+            , p "brand"
+                ( o
+                    [ linkage newComer
+                    ]
+                )
+            ]
+        )
+    , p "meta"
+        ( o
+            [ p "new-resource-tag" ( s "NCFRANKSXXXYYYYY")
+            ]
+        )
+    ]
+
+
+choices =
+    [ horizonThighs
+    , wittyThighs
+    , maryFranks
+    , rumFranks
+    ]
+
+
+choice_ids =
+    List.map takeId choices
+        |> List.map o
+
+
+choice_objects =
+    List.map o choices

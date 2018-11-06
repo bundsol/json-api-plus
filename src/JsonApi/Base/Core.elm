@@ -1,59 +1,103 @@
 module JsonApi.Base.Core exposing
-  ( Identifier, trail, track, equal, isNew, idOf, typeOf, getId, emptyId, getType
-  , TopLevel, emptyDocument, setDocMeta, updateMethod, getDocMeta
-  , Object
-  , getObject
-  , getAttributes, getLocalAttributes
-  , reach, reachMany
-  , modifyAttributes, modifyLocal, trade
-  , setRelationLocality, renameRelationship, swapData
-  , getRelationLocality
-  , unrelate, incorporate , relate ,createOne
-  , docDecoder, docEncoder
-  , filterDocMeta, clearDocMeta
-  , getErrors
-  , getDocLinks
-  , getAllDocMeta
-  , getRelationshipLinks
-  , getRelationshipMeta
-  )
-  
+    ( Identifier
+    , Object
+    , TopLevel
+    , clearDocMeta
+    , createOne
+    , docDecoder
+    , docEncoder
+    , emptyDocument
+    , emptyId
+    , equal
+    , filterDocMeta
+    , getAllDocMeta
+    , getAttributes
+    , getDocLinks
+    , getDocMeta
+    , getErrors
+    , getId
+    , getLocalAttributes
+    , getObject
+    , getRelationLocality
+    , getRelationshipLinks
+    , getRelationshipMeta
+    , getType
+    , idOf
+    , incorporate
+    , isNew
+    , modifyAttributes
+    , modifyLocal
+    , reach
+    , reachMany
+    , relate
+    , renameRelationship
+    , setDocMeta
+    , setRelationLocality
+    , swapData
+    , track
+    , trade
+    , trail
+    , typeOf
+    , unrelate
+    , updateMethod
+    )
 
-import Json.Decode as Decode exposing (Decoder, Value) 
-import JsonApi.Base.Utility exposing (find)
-import JsonApi.Base.Definition as Definition  exposing
-  ( IDKey, buildKey, WithData
-  , Complement
-  , Relationship, Relationships, Document
-  , GeneralDictionary, GeneralDictionaryModifier
-  , DocTypeTaggers, Encoder
-  )
-import JsonApi.Base.Decode exposing (topLevelDecoder)
-import JsonApi.Base.Encode exposing (documentEncoder)
-import JsonApi.Base.Accessor as Accessor exposing 
-  ( idKeyFromData
-  , idKeysFromData
-  )
-import JsonApi.Base.Modifier as Modifier exposing
-  ( setData, modifyRelationships
-  , insertTagIfType
-  )
-  
-  
-import JsonApi.Base.Relations as Relations 
-  
-  
---import JsonApi.Base.Filter as Filter exposing (..)
+
+
 import Dict exposing (Dict)
-import Set exposing (Set)
+import Json.Decode as Decode exposing (Decoder, Value)
+import JsonApi.Base.Accessor as Accessor
+    exposing
+        ( idKeyFromData
+        , idKeysFromData
+        )
+import JsonApi.Base.Decode exposing (topLevelDecoder)
+import JsonApi.Base.Definition as Definition
+    exposing
+        ( Complement
+        , DocTypeTaggers
+        , Document
+        , Encoder
+        , GeneralDictionary
+        , GeneralDictionaryModifier
+        , IDKey
+        , Relationship
+        , Relationships
+        , WithData
+        , buildKey
+        )
+import JsonApi.Base.Encode exposing (documentEncoder)
+import JsonApi.Base.Modifier as Modifier
+    exposing
+        ( insertTagIfType
+        , modifyRelationships
+        , setData
+        )
+import JsonApi.Base.Relations as Relations
+import JsonApi.Base.Utility exposing (find)
+import List
+    exposing
+        ( any
+        , append
+        , concat
+        , filter
+        , filterMap
+        , foldl
+        , head
+        , isEmpty
+        , length
+        , map
+        , singleton
+        , sort
+        , take
+        )
 import Maybe exposing (andThen, withDefault)
-import List exposing (map, foldl, sort, head, filter, any, concat, 
-  isEmpty, singleton, append, take, length, filterMap)
-import Tuple exposing
-  ( mapFirst
-  , mapSecond
-  )
-
+import Set exposing (Set)
+import Tuple
+    exposing
+        ( mapFirst
+        , mapSecond
+        )
 
 
 
@@ -184,7 +228,15 @@ type alias Object a = Definition.GeneralObject a {idr: Identifier}
 
 
 turnObject : Definition.Object a -> Object a
-turnObject o = {o | idr = Identifier o.idr}
+turnObject o = 
+  { type_ = o.type_
+  , id = o.id
+  , attributes = o.attributes
+  , meta = o.meta
+  , links = o.links
+  , idr = Identifier o.idr
+  }
+
 
 
 getAttributes : Identifier -> TopLevel a -> Maybe (GeneralDictionary a)

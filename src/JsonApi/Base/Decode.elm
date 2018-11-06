@@ -1,45 +1,92 @@
 module JsonApi.Base.Decode exposing
-  ( topLevelDecoder
-  , generalDictionaryDecoder
-  )
-
-import JsonApi.Base.Definition exposing 
-  ( IDKey, buildKey, IdTagger,  Data(..), Complement
-  , Error
-  , StringPairList, GeneralDictionary, GeneralPairList
-  , ComplementDictionary
-  , Relationship
-  , Link(..), Href
-  , JsonApiVersion, Document, DocTypeTaggers
-  , Entry, Entries
-  )
-
-import JsonApi.Base.Accessor exposing
-  ( isInData
-  , isNew
-  )
-
-import Set exposing (Set)
-
-
-import Json.Decode as Decode exposing (null, field, value, list, maybe, oneOf, 
-  map2, map3, map4, map6, map8, map7, decodeString, 
-  string, Value, succeed, decodeValue, Decoder, dict, float, int, bool,
-  keyValuePairs, fail, at)
-
-import Json.Encode as Encode exposing (encode)
-
-import Maybe exposing (withDefault)
+    ( generalDictionaryDecoder
+    , topLevelDecoder
+    )
 
 import Dict exposing (Dict)
-
-import List exposing ( map, append, singleton, any, filter, 
-      member, filterMap, all, isEmpty, foldl, indexedMap, concat)
-
-import Tuple exposing (first, mapSecond)
-
-import String exposing (trim)
-
+import Json.Decode as Decode
+    exposing
+        ( Decoder
+        , Value
+        , at
+        , bool
+        , decodeString
+        , decodeValue
+        , dict
+        , fail
+        , field
+        , float
+        , int
+        , keyValuePairs
+        , list
+        , map2
+        , map3
+        , map4
+        , map6
+        , map7
+        , map8
+        , maybe
+        , null
+        , oneOf
+        , string
+        , succeed
+        , value
+        , errorToString
+        )
+import Json.Encode as Encode exposing (encode)
+import JsonApi.Base.Accessor
+    exposing
+        ( isInData
+        , isNew
+        )
+import JsonApi.Base.Definition
+    exposing
+        ( Complement
+        , ComplementDictionary
+        , Data(..)
+        , DocTypeTaggers
+        , Document
+        , Entries
+        , Entry
+        , Error
+        , GeneralDictionary
+        , GeneralPairList
+        , Href
+        , IDKey
+        , IdTagger
+        , JsonApiVersion
+        , Link(..)
+        , Relationship
+        , StringPairList
+        , buildKey
+        )
+import List
+    exposing
+        ( all
+        , any
+        , append
+        , concat
+        , filter
+        , filterMap
+        , foldl
+        , indexedMap
+        , isEmpty
+        , map
+        , member
+        , singleton
+        )
+import Maybe exposing (withDefault)
+import Set exposing (Set)
+import String exposing
+  ( trim
+  , join
+  , fromInt
+  )
+import Tuple exposing
+  ( first
+  , mapSecond
+  , pair
+  )
 
 
 generalPairListDecoder : Decoder a ->   Decoder (GeneralPairList a)
@@ -64,7 +111,7 @@ ensureCorrect decoder mv =
     Just v -> 
       case decodeValue decoder v of 
         Ok a ->  succeed (Just a)
-        Err err -> fail err 
+        Err err -> fail (errorToString err )
 
 
 
@@ -135,7 +182,7 @@ optionallyAllowLinks decoder fieldNames emptyMgmt =
     isAllGood links =
       let 
         pass = succeed links
-        noPass = fail ("Only " ++ (toString fieldNames) ++ " are allowed")
+        noPass = fail ("Only " ++ (join "," fieldNames) ++ " are allowed")
       in 
         case (emptyMgmt, isEmpty links, all isAllowed links) of 
           (AllowEmpties, True, _) -> pass
@@ -229,9 +276,9 @@ idKeyDecoder tags linkagePurpose =
           succeed (type_, "", intTag)
         _ -> fail (tag ++ " is not a new resource tag")
     newResourceId = 
-      map2 (,)
+      map2 pair
         (field "meta" (nonEmpty "new-resource-tag"))
-        ( map2 (,)
+        ( map2 pair
             (nonEmpty "type")
             (absent Nothing "id" "Id must not be present")
         )
@@ -250,7 +297,7 @@ idKeyDecoder tags linkagePurpose =
 -- TODO: Make case insensitive
 checkForReservedNames : GeneralDictionary a -> Decoder (GeneralDictionary a)
 checkForReservedNames dict =
-  case any ((flip Dict.member) dict) ["id","type"] of 
+  case any ((|>) dict << Dict.member) ["id","type"] of 
     True -> 
       fail "No attribute can be named 'id' or 'type'"
     False -> 
@@ -305,12 +352,12 @@ optionalRelationData  tags  =
 detectOne : List String -> Decoder Bool
 detectOne fieldNames = 
   let
-    callAgain pair =
-      case  pair  of 
+    callAgain tup =
+      case  tup  of 
         ([], Nothing) -> succeed False 
         (h::t, Nothing) ->           
           maybe (field h value)
-          |> Decode.map ((,) t)
+          |> Decode.map (pair t)
           |> Decode.andThen callAgain
         (_, Just _) -> succeed True
   in 
@@ -360,7 +407,7 @@ objectComplementDecoder  tags decoder =
 -}
 entryDecoder : NewResourceTags ->   Decoder a -> LinkageDecodingPurpose -> Decoder (Entry a)
 entryDecoder  tags decoder linkagePurpose   =  
-  Decode.map2  (,)
+  Decode.map2  pair
     (idKeyDecoder tags linkagePurpose)
     (objectComplementDecoder tags  decoder) 
 
@@ -438,11 +485,11 @@ topLevelDecoder decoder idTagger taggers =
       |> Decode.andThen figureOutNewTags
       |> Decode.andThen (primaryDataEntriesDecoder decoder)
       |> Decode.andThen  (documentDecoder decoder)
-      |> Decode.andThen  (tagDocument idTagger taggers)-- ((,) taggers.data)
+      |> Decode.andThen  (tagDocument idTagger taggers)-- (pair taggers.data)
     , (errorsDecoder decoder)
-      |> Decode.map ((,) taggers.errors)
+      |> Decode.map (pair taggers.errors)
     , (metaDocDecoder decoder)
-      |> Decode.map ((,) taggers.meta)
+      |> Decode.map (pair taggers.meta)
     ]
     
 
@@ -452,13 +499,13 @@ tagDocument idTagger taggers doc =
     Id id -> 
       Maybe.map idTagger id
       |> taggers.data.single 
-      |> (flip (,)) doc
+      |> (|>) doc << pair
       |> succeed
     Ids idSet -> 
       Set.toList idSet 
       |> map idTagger
       |> taggers.data.multiple
-      |> (flip (,)) doc
+      |> (|>) doc << pair
       |> succeed 
     _ -> fail "no 'data' element present"
   
@@ -532,8 +579,8 @@ figureOutNewTags linkagePurpose =
       foldl build Dict.empty entries  
     buildTags key item accum =
       Set.toList item
-      |> map ((,) key) 
-      |> indexedMap (flip (,))
+      |> map (pair key) 
+      |> indexedMap (\a b -> (b,a))
       |> map (mapSecond ((+) 1))
       |> Dict.fromList
       |> Dict.union accum
@@ -541,7 +588,7 @@ figureOutNewTags linkagePurpose =
       concat [primEntries, primaryRels, includedRels]
       |> groups 
       |> Dict.foldl buildTags Dict.empty
-      |> (,) purpose
+      |> pair purpose
     primaryAsEntries =
       oneOf 
       [ map2 
@@ -704,7 +751,7 @@ errorSourceDecoder =
       filterMap identity [ma,mb]
     readyForFilter fieldName = 
       Decode.map 
-        (Maybe.map ((,) fieldName)) 
+        (Maybe.map (pair fieldName)) 
         (validateIfPresent fieldName string)
     reserved =
       map2 two 
@@ -733,7 +780,7 @@ optionalErrorIdDecoder =
     decoder = 
       oneOf 
       [ string
-      , Decode.map toString int
+      , Decode.map fromInt int
       ]
   in 
     optionalWithDefault "" "id" decoder

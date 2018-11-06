@@ -5,6 +5,7 @@ import Expect
 import Fuzz exposing (Fuzzer)
 import Test exposing (..)
 import JsonApi.Base.Guide exposing(Guide)
+import Tuple exposing (pair)
 
 
 import JsonApi.Base.Utility exposing (tuplicate)
@@ -58,7 +59,8 @@ suite =
 
 singlePick o =
   case Dict.get "price" o.attributes of 
-    Just (Double 0.99) -> Just o.idr
+    Just (Double price) -> 
+      if abs(price - 0.99) < 0.001 then Just o.idr else Nothing
     _ -> Nothing
 
 favStockKey = "fav-stock"
@@ -138,7 +140,7 @@ unrelateTest name =
             [s1, s2] -> 
               relateOneMore goodStocksKey s1 g 
               |> relateOneMore goodStocksKey s2 
-              |> (,) s1
+              |> pair s1
             _ -> (emptyIdr, g)
         sum = 
           reachReduce sumBuilder 0.0 [goodStocksKey] newGuide
@@ -185,7 +187,7 @@ relationshipIsMany name =
           case reachFilterMap oneOfMany ["stocks"] g of 
             [s1, s2] -> 
               relateOneMore goodStocksKey s1 g 
-              |> (,) (s1,s2)
+              |> pair (s1,s2)
             _ -> (tuplicate emptyIdr, g)
         idrsQty = 
           getIdrs goodStocksKey newGuide
@@ -215,7 +217,7 @@ relationshipIsSingle name =
           case reachFilterMap oneOfMany ["stocks"] g of 
             [s1, s2] -> 
               relateSingle favStockKey s1 g 
-              |> (,) (s1,s2)
+              |> pair (s1,s2)
             _ -> (tuplicate emptyIdr, g)
         thenWeGot = 
           getIdr favStockKey newGuide
@@ -239,7 +241,7 @@ swap name =
         criterion object = 
           Dict.get "name" object.attributes  ==  Just (Str "Bob's Corner")
         path = ["option-pack", "establishments"]
-        g = 
+        h = 
           case find criterion path newPurchaseGuide of 
             Just twinTownIdr -> 
               relateSingle "potential-store" twinTownIdr newPurchaseGuide
@@ -251,15 +253,15 @@ swap name =
           |> andThen (getString "name")
           |> withDefault ""
         names = 
-          ( getName "establishment" g 
-          , getName "potential-store" g
+          ( getName "establishment" h 
+          , getName "potential-store" h
           )
         localities = 
-          ( isLocal "establishment" g
-          , isLocal "potential-store" g 
+          ( isLocal "establishment" h
+          , isLocal "potential-store" h
           )
         swapped = 
-          swapData "establishment" "potential-store" g 
+          swapData "establishment" "potential-store" h
         names2 = 
           ( getName "establishment" swapped
           , getName "potential-store" swapped
@@ -270,12 +272,12 @@ swap name =
           )
       in 
         Expect.equal
-           ( names, localities
-           , names2, localities2
-           )
-           ( ("Dollar Bargain","Bob's Corner"), (False,True)
-           , ("Bob's Corner","Dollar Bargain"), (False,True)
-           )
+           { f1=names, f2=localities
+           , f3=names2, f4=localities2
+           }
+           { f1=("Dollar Bargain","Bob's Corner"), f2=(False,True)
+           , f3= ("Bob's Corner","Dollar Bargain"), f4=(False,True)
+           }
         
           
           

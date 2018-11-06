@@ -70,8 +70,8 @@ createOne name =
           |> List.any (JsonApi.equal child.idr)
       in 
         Expect.equal 
-          (orginalLength, childChildren, newLength, amongChildren) 
-          (3,             0 ,            4,         True)
+          {f1=orginalLength, f2=childChildren, f3=newLength, f4=amongChildren}
+          {f1=3,             f2=0 ,            f3=4,         f4=True}
           
           
           
@@ -98,8 +98,8 @@ createJustTheOne name =
           |> andThen getType
       in 
         Expect.equal 
-          (didNotHaveOne, childDoesNotHaveOne, typeAsSeenByParent, overWritten) 
-          (True,          True ,               Just "phony",       Just "real-pony")
+          {f1 = didNotHaveOne, f2 =childDoesNotHaveOne, f3 =typeAsSeenByParent, f4 =overWritten}
+          {f1 =True,          f2 =True ,               f3 =Just "phony",       f4 =Just "real-pony"}
       
       
         

@@ -1,38 +1,42 @@
-module JsonApi.Base.Relations exposing 
-  ( relate
-  , createOne
-  , incorporate
-  )
-  
+module JsonApi.Base.Relations exposing
+    ( createOne
+    , incorporate
+    , relate
+    )
 
-
-import JsonApi.Base.Definition exposing 
-  ( IDKey, buildKey
-  , Data(..)
-  , Relationship, Relationships
-  , Resource, newResource, toKey, toEntry
-  , Document
-  )
-
-import JsonApi.Base.Accessor as Accessor exposing 
-  ( isNew
-  , idKeyFromData
-  , getResource
-  )
-
-import JsonApi.Base.Modifier as Modifier exposing
-  ( insertTagIfType
-  , setData
-  , modifyRelationships
-  )
-
-import JsonApi.Base.Utility exposing (findSpot)
-
-import List exposing (map, foldl,singleton,filter)
 import Dict
+import JsonApi.Base.Accessor as Accessor
+    exposing
+        ( getResource
+        , idKeyFromData
+        , isNew
+        )
+import JsonApi.Base.Definition
+    exposing
+        ( Data(..)
+        , Document
+        , IDKey
+        , Relationship
+        , Relationships
+        , Resource
+        , buildKey
+        , newResource
+        , toEntry
+        , toKey
+        )
+import JsonApi.Base.Modifier as Modifier
+    exposing
+        ( insertTagIfType
+        , modifyRelationships
+        , setData
+        )
+import JsonApi.Base.Utility exposing (findSpot)
+import List exposing (filter, foldl, map, singleton)
+import Maybe exposing (andThen, withDefault)
 import Set
-import Maybe exposing (withDefault, andThen)
-import String exposing(trim)
+import String exposing (trim)
+import Tuple exposing (pair)
+
 
 
 
@@ -51,7 +55,7 @@ createIncludedId type_  doc   =
 getPrimaryResource :  Document a -> Maybe (Resource a)
 getPrimaryResource doc =
   idKeyFromData doc 
-  |> andThen ((flip getResource) doc)   
+  |> andThen ((|>) doc << getResource)   
   
   
   
@@ -62,7 +66,7 @@ getPrimaryResources  doc=
       let 
         build idKey accum =
           getResource  idKey doc 
-          |> Maybe.map ((flip (::)) accum)
+          |> Maybe.map ((|>) accum << (::))
           |> withDefault accum
       in 
         Set.foldl  build [] keySet
@@ -233,7 +237,7 @@ createOne idKey field isSingle type_ doc =
       newIdKey =  createIncludedId type_ doc
     in 
       relate idKey field isSingle newIdKey doc
-      |> (,) newIdKey
+      |> pair newIdKey
   
 
 

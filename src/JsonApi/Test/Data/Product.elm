@@ -1,49 +1,60 @@
-module JsonApi.Test.Data.Product exposing (..)
+module JsonApi.Test.Data.Product exposing (chickenThighs, product_ids, product_objects, products, turkeyFranks)
 
 import JsonApi.Test.Shortcuts exposing (..)
 
+
 chickenThighs =
-  [ "type" => s "product"
-  , "id" => s "11"
-  , "attributes" => o
-    [ "name" => s "Chicken thighs"
-    , "description" => s "Just the thighs, not the drumsticks"
+    [ p "type" ( s "product")
+    , p "id" ( s "11")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "Chicken thighs")
+            , p "description" ( s "Just the thighs, not the drumsticks")
+            ]
+        )
     ]
-  ]
 
 
 turkeyFranks =
-  [ "type" => s "product"
-  , "id" => s "15"
-  , "attributes" => o
-    [ "name" => s "Turkey franks"
-    , "description" => s "Turkey wienier"
+    [ p "type" ( s "product")
+    , p "id" ( s "15")
+    , p "attributes"
+        ( o
+            [ p "name" ( s "Turkey franks")
+            , p "description" ( s "Turkey wienier")
+            ]
+        )
     ]
-  ]
 
-products = 
-  [ chickenThighs
-  , [ "type" => s "product"
-    , "id" => s "12"
-    , "attributes" => o
-      [ "name" => s "Chicken drumsticks"
-      , "description" => s "Just the drumsticks, without the thigh"
+
+products =
+    [ chickenThighs
+    , [ p "type" ( s "product")
+      , p "id" ( s "12")
+      , p "attributes"
+            ( o
+                [ p "name" ( s "Chicken drumsticks")
+                , p "description" ( s "Just the drumsticks, without the thigh")
+                ]
+            )
       ]
-    ]
-  , [ "type" => s "product"
-    , "id" => s "13"
-    , "attributes" => o
-      [ "name" => s "Whole chicken"
-      , "description" => s "Includes both frier and roaster"
+    , [ p "type" ( s "product")
+      , p "id" ( s "13")
+      , p "attributes"
+            ( o
+                [ p "name" ( s "Whole chicken")
+                , p "description" ( s "Includes both frier and roaster")
+                ]
+            )
       ]
+    , turkeyFranks
     ]
-  , turkeyFranks
-  ]
-  
-product_ids = 
-  List.map takeId products
-  |> List.map o
-  
-  
-product_objects = 
-  List.map o products
+
+
+product_ids =
+    List.map takeId products
+        |> List.map o
+
+
+product_objects =
+    List.map o products

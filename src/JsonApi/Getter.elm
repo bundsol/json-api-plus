@@ -1,97 +1,120 @@
 module JsonApi.Getter exposing
-  ( isNew
-  , getString, getBool, getInt, getFloat, isTrue, isNull, isLocalNull
-  , defaultString, defaultBool, defaultInt, defaultFloat
-  , getLocalString, getLocalBool, getLocalFloat, getLocalInt, isLocalTrue
-  , localDefaultString, localDefaultInt, localDefaultBool, localDefaultFloat
-  , getList, getDictionary, getProperty, getLocal, getSubfield, getJson
-  , reachString, reachInt, reachFloat, reachBool
-  , reachDefaultString, reachDefaultInt, reachDefaultFloat, reachDefaultBool
-  , reachIdOrEmpty, getObject, reachObject
-  , reachFilterMap, reachReduce
-  , getLinks 
-  )
-
+    ( getString, getInt, getFloat, getBool
+    , getDictionary, getList, getJson, getProperty, getSubfield, getLocal, getObject, reachObject
+    , defaultString, defaultInt, defaultFloat, defaultBool
+    , getLocalString, getLocalInt, getLocalFloat, getLocalBool
+    , localDefaultString, localDefaultInt, localDefaultFloat, localDefaultBool
+    , isNew, isLocalTrue, isNull, isLocalNull, isTrue
+    , reachString, reachInt, reachFloat, reachBool
+    , reachDefaultString, reachDefaultInt, reachDefaultFloat, reachDefaultBool, reachIdOrEmpty
+    , reachFilterMap, reachReduce
+    , getLinks
+    )
 
 {-| Functions to gain access to resources and their properties
 
+
 ## Primitives
+
 @docs getString, getInt, getFloat, getBool
 
 
 ## Composite values
+
 @docs getDictionary, getList, getJson, getProperty, getSubfield, getLocal, getObject, reachObject
 
 
-
 ## Default values
+
+
 ### Return either given default value or named attribute.
+
 @docs defaultString, defaultInt, defaultFloat, defaultBool
 
 
 ## Local values
+
+
 ### Get values that are only used at client side. These must have been set using
+
+
 ### any of the `setLocal-` functions.
+
 @docs getLocalString, getLocalInt, getLocalFloat, getLocalBool
 
 
 ## Local default values
-### Return given default value or the value of named local property. 
+
+
+### Return given default value or the value of named local property.
+
 @docs localDefaultString, localDefaultInt, localDefaultFloat, localDefaultBool
 
 
 ## Query
-@docs isNew, isLocalTrue,  isNull, isLocalNull, isTrue
+
+@docs isNew, isLocalTrue, isNull, isLocalNull, isTrue
 
 
 ## Reach property
-### Follow given relationships, get required field at the last obtained 
+
+
+### Follow given relationships, get required field at the last obtained
+
+
 ### resource. All relationships named in the list must be one-to-one.
+
 @docs reachString, reachInt, reachFloat, reachBool
 
 
-
 ## Reach property or default
+
+
 ### Follow given relationships, get required field at the last obtained
+
+
 ### resource, or return given default value. All relationships named in the list
+
+
 ### must be one-to-one.
+
 @docs reachDefaultString, reachDefaultInt, reachDefaultFloat, reachDefaultBool, reachIdOrEmpty
 
 
 ## Transformation
+
 @docs reachFilterMap, reachReduce
 
 
 ## Links
-@docs getLinks
 
+@docs getLinks
 
 -}
 
-
-import JsonApi exposing( Guide)
-import JsonApi.Base.Guide as Guide 
-import JsonApi.Base.Guide exposing(setIdr)
-import JsonApi.Base.Core as Core exposing
-  ( Identifier
-  , Object
-  , isNew
-  , getId
-  , reach
-  , reachMany
-  )
-import JsonApi.Base.Definition as Definition exposing
-  ( GeneralDictionary
-  )
-import JsonApi.Base.Link as Link exposing(linkTranslator)  
-import JsonApi.TopLevel as TopLevel
-
-import Json.Encode exposing (Value)
 import Boxed exposing (..)
-import Maybe exposing (andThen, withDefault)
 import Dict exposing (Dict)
-import Tuple exposing (mapSecond)
+import Json.Encode exposing (Value)
+import JsonApi exposing (Guide)
+import JsonApi.Base.Core as Core
+    exposing
+        ( Identifier
+        , Object
+        , getId
+        , isNew
+        , reach
+        , reachMany
+        )
+import JsonApi.Base.Definition as Definition
+    exposing
+        ( GeneralDictionary
+        )
+import JsonApi.Base.Guide as Guide exposing (setIdr)
+import JsonApi.Base.Link as Link exposing (linkTranslator)
+import JsonApi.TopLevel as TopLevel
 import List exposing (map)
+import Maybe exposing (andThen, withDefault)
+import Tuple exposing (mapSecond)
 
 
 
@@ -237,8 +260,10 @@ isLocalNull field g =
 -}  
 getList : String -> Guide g c -> List (Boxed c)
 getList field g =
+
   case getProperty field g of 
     Just (Lst list) -> list 
+    
     _ -> []
   
 
@@ -248,8 +273,10 @@ getList field g =
 -}  
 getDictionary : String -> Guide g c  -> Dict String (Boxed c)
 getDictionary property g =
+
   case getProperty property g of
     Just (Dictionary dict) -> dict 
+    
     _ -> Dict.empty
 
 
@@ -258,8 +285,10 @@ getDictionary property g =
 -}  
 getJson : String -> Guide g c  -> Maybe Value
 getJson property g =
+
   case getProperty property g of
     Just (Json value) -> Just value
+    
     _ -> Nothing
 
 
@@ -369,10 +398,14 @@ reachObject fields  g =
 reachFilterMap : (Object (Boxed c) -> Maybe a)  -> List String -> Guide g c  -> List a
 reachFilterMap function fields g =
   let 
+  
     ids = 
       Core.reachMany g.idr fields g.doc 
+      
     criterion idr =
+    
       if isNew idr then Nothing 
+      
       else
         Core.getObject idr g.doc 
         |> andThen function 
@@ -384,12 +417,16 @@ reachFilterMap function fields g =
 reachReduce : (Object (Boxed c) -> b -> b) -> b -> List String -> Guide g c  -> b
 reachReduce function accum fields g =
   let 
+  
     ids = 
       Core.reachMany g.idr fields g.doc 
+      
     builder idr b =
       case (isNew idr, Core.getObject idr g.doc) of 
         (True, _) -> b
+        
         (_, Nothing) -> b 
+        
         (_, Just o) -> function o b
   in 
     List.foldl builder accum ids    
@@ -430,7 +467,4 @@ getLinks g =
   |> withDefault []
   |> map  linkTranslator
   
-
-
-
 
